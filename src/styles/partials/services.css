@@ -1,0 +1,740 @@
+/* ---------- services ---------- */
+.service-grid {
+  display: grid;
+  gap: 56px;
+}
+@media (min-width: 900px) {
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
+.service h3 {
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--on-surface) !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 24px;
+}
+.service > p {
+  font-size: 16px;
+  max-width: 42ch;
+  margin: 0;
+  color: var(--muted);
+}
+.service .badge {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+  border: 1px solid rgba(0, 104, 112, 0.35);
+  border-radius: var(--r-sm);
+  padding: 3px 8px;
+  font-weight: 500;
+}
+
+/* illustration shared parts */
+.service-art {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.service-art * {
+  vector-effect: non-scaling-stroke;
+}
+.art-blob {
+  fill: var(--raised);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* the illustrations sit on their own light panel so they don't melt into the tinted band;
+   the panel starts lower, so the top of each picture breaks out of the frame */
+.service-visual {
+  position: relative;
+  isolation: isolate;
+}
+.service-visual::before {
+  content: '';
+  position: absolute;
+  inset: 16% 0 0;
+  z-index: -1;
+  background: #aedfdd;
+  border-radius: var(--r-md);
+  box-shadow: 0 12px 28px -22px rgba(5, 26, 45, 0.22);
+}
+.service-art {
+  display: block;
+  padding: 0 8px 8px;
+}
+.service-art .paper,
+.service-art .chat rect,
+.service-art .cart-card rect,
+.service-art .tag-code rect,
+.service-art .bubble rect,
+.service-art .done-card .paper {
+  fill: var(--raised);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service-art .bar {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service-art .dot {
+  fill: var(--raised);
+}
+.service-art .dot-dk {
+  fill: var(--art-ink);
+}
+.service-art .ln,
+.service-art .chat path,
+.service-art .curve,
+.service-art .cart,
+.service-art .tag-code path,
+.service-art .bubble path {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.service-art .chat path:first-of-type,
+.service-art .bubble path:first-of-type {
+  fill: var(--raised);
+}
+.service-art .img {
+  fill: var(--secondary);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service-art .mount {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.service-art .sun {
+  fill: var(--raised);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .sel {
+  fill: none;
+  stroke: var(--tertiary);
+  stroke-width: 1.6;
+  stroke-dasharray: 5 4;
+}
+.service-art .pill {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .pill--2 {
+  fill: var(--secondary);
+}
+.service-art .node {
+  fill: var(--raised);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .pen path {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.service-art .badge-plus circle {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .badge-plus path {
+  stroke: var(--art-ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.service-art .gear {
+  fill: var(--secondary);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.service-art .gear--dk {
+  fill: #123d52;
+  stroke: var(--primary);
+  stroke-width: 1.6;
+}
+.service-art .gear-hole {
+  fill: var(--raised);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .floor {
+  stroke: rgba(5, 26, 45, 0.18);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.service-art .floor-pad {
+  fill: rgba(5, 26, 45, 0.06);
+}
+.service-art .screen {
+  fill: #0e3446;
+  stroke: var(--art-ink);
+  stroke-width: 2.4;
+}
+.service-art .code {
+  stroke: var(--art-ink);
+  stroke-width: 3.6;
+  stroke-linecap: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+.service-art .code.hl {
+  stroke: var(--primary);
+}
+.service-art .puzzle path {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.service-art .ico,
+.service-art .ico-sm {
+  fill: var(--secondary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .spark,
+.service-art .check {
+  fill: none;
+  stroke: var(--tertiary);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.service-art .done-card text {
+  font: 500 12px var(--font-mono);
+  fill: var(--art-ink);
+}
+.service-art .track {
+  fill: var(--border);
+}
+.service-art .fill {
+  fill: var(--primary);
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+.service-art .r1 .fill {
+  transform: scaleX(0.45);
+}
+.service-art .r2 .fill {
+  transform: scaleX(0.85);
+}
+.service-art .r3 .fill {
+  transform: scaleX(0.7);
+}
+.service-art .books rect {
+  fill: var(--primary);
+}
+.service-art .books rect:nth-child(3n) {
+  fill: var(--secondary);
+}
+.service-art .books rect:nth-child(4n) {
+  fill: var(--tertiary);
+}
+.service-art .tdot {
+  fill: var(--tertiary);
+}
+.service-art .heart path {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+/* everything that moves gets a fill-box origin */
+.service-art g,
+.service-art .gear,
+.service-art .spin {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* motion – runs once the card is in view */
+.service.is-visible .art-blob {
+  animation: blob 12s ease-in-out infinite;
+}
+.service.is-visible .chat {
+  animation: bob 5s ease-in-out infinite;
+}
+.service.is-visible .pen {
+  animation: pen-draw 4s ease-in-out infinite;
+}
+.service.is-visible .sel {
+  animation: march 1s linear infinite;
+}
+.service.is-visible .cart-card {
+  animation: bob 6s ease-in-out -2s infinite;
+}
+.service.is-visible .badge-plus {
+  animation: pop 3s ease-in-out infinite;
+}
+
+.service.is-visible .g1 .spin {
+  animation: spin 10s linear infinite;
+}
+.service.is-visible .g2 .spin {
+  animation: spin 7s linear infinite reverse;
+}
+.service.is-visible .code {
+  animation: code-type 6s ease-in-out infinite;
+}
+.service.is-visible .c2 {
+  animation-delay: 0.2s;
+}
+.service.is-visible .c3 {
+  animation-delay: 0.4s;
+}
+.service.is-visible .c4 {
+  animation-delay: 0.6s;
+}
+.service.is-visible .c5 {
+  animation-delay: 0.8s;
+}
+.service.is-visible .c6 {
+  animation-delay: 1s;
+}
+.service.is-visible .c7 {
+  animation-delay: 1.2s;
+}
+.service.is-visible .c8 {
+  animation-delay: 1.4s;
+}
+.service.is-visible .c9 {
+  animation-delay: 1.6s;
+}
+.service.is-visible .layout-win {
+  animation: bob 6s ease-in-out infinite;
+}
+.service.is-visible .tag-code {
+  animation: bob 5s ease-in-out -1.5s infinite;
+}
+.service.is-visible .puzzle {
+  animation: snap 4s var(--ease-out) infinite;
+}
+
+.service.is-visible .r1 .fill {
+  animation: fill-45 4.5s var(--ease-out) infinite;
+}
+.service.is-visible .r2 .fill {
+  animation: fill-85 4.5s var(--ease-out) 0.2s infinite;
+}
+.service.is-visible .r3 .fill {
+  animation: fill-70 4.5s var(--ease-out) 0.4s infinite;
+}
+.service.is-visible .b-left {
+  animation: chat-a 6s ease-in-out infinite;
+}
+.service.is-visible .b-right {
+  animation: chat-b 6s ease-in-out infinite;
+}
+.service.is-visible .tdot {
+  animation: blink-soft 1.2s ease-in-out infinite;
+}
+.service.is-visible .tdot:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+.service.is-visible .tdot:nth-of-type(3) {
+  animation-delay: 0.4s;
+}
+.service.is-visible .heart {
+  animation: beat 2s ease-in-out infinite;
+}
+.service:hover .service-art .art-blob {
+  animation-duration: 4s;
+}
+
+/* space props inside the service illustrations */
+/* groups positioned with an SVG transform attribute keep their own origin */
+.service-art g[transform] {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.service-art .sp {
+  transform-box: fill-box;
+  transform-origin: center;
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  animation: dl-twinkle 2.8s ease-in-out infinite alternate;
+}
+.service-art .sp--2 {
+  fill: var(--secondary);
+  animation-delay: -1.4s;
+}
+.service-art .svc-rocket-in {
+  animation: svc-lift 3s ease-in-out infinite alternate;
+}
+@keyframes svc-lift {
+  from {
+    transform: translate(-3px, 0);
+  }
+  to {
+    transform: translate(5px, 0);
+  }
+}
+.service-art .pl-body {
+  fill: #7fc8f0;
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service-art .pl-band {
+  fill: none;
+  stroke: rgba(5, 26, 45, 0.35);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.service-art .pl-ring,
+.service-art .pl-ring-back {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service.is-visible .svc-planet {
+  animation: bob 6s ease-in-out -1s infinite;
+}
+.service-art .svc-orbit {
+  fill: none;
+  stroke: rgba(5, 26, 45, 0.3);
+  stroke-width: 1.6;
+  stroke-dasharray: 3 6;
+}
+.service-art .svc-moon circle {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .svc-moon .mc {
+  fill: var(--art-ink);
+  stroke: none;
+  opacity: 0.35;
+}
+.service-art .sp-panel {
+  fill: var(--secondary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.service-art .sp-grid {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 1.1;
+  opacity: 0.5;
+}
+.service-art .sp-arm {
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service-art .sp-core,
+.service-art .sp-dish {
+  fill: var(--raised);
+  stroke: var(--art-ink);
+  stroke-width: 2.2;
+}
+.service-art .sp-win {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 1.8;
+}
+.service.is-visible .svc-sat-in {
+  animation: sat-drift 6s ease-in-out infinite alternate;
+}
+.service-art .signal path {
+  fill: none;
+  stroke: var(--tertiary);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  opacity: 0;
+}
+.service.is-visible .signal path {
+  animation: signal 2.4s ease-out infinite;
+}
+.service.is-visible .signal path:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.service.is-visible .signal path:nth-child(3) {
+  animation-delay: 0.6s;
+}
+@keyframes signal {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* flow arrows into the CTA */
+.service-flow {
+  display: none;
+  width: 100%;
+  height: 90px;
+  margin: 48px auto 0;
+  overflow: visible;
+}
+.service-flow path {
+  fill: none;
+  stroke: #b5cbcf;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.service-flow path:not(.tip) {
+  stroke-dasharray: 8 8;
+  animation: flow 1.2s linear infinite;
+}
+.service-flow .tip {
+  fill: #b5cbcf;
+  stroke: none;
+}
+@media (min-width: 900px) {
+  .service-flow {
+    display: block;
+  }
+}
+
+.services-cta {
+  text-align: center;
+  margin: 40px auto 0;
+  max-width: 640px;
+}
+.services-cta p {
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--on-surface);
+  margin: 0 0 28px;
+}
+.services-cta .btn svg {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--fast) ease;
+}
+.services-cta .btn:hover svg {
+  transform: translateX(4px);
+}
+
+.tech {
+  list-style: none;
+  margin: 56px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 40px;
+}
+.tech li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--muted);
+  opacity: 0.8;
+  transition:
+    opacity var(--fast) ease,
+    color var(--fast) ease;
+}
+.tech li:hover {
+  opacity: 1;
+  color: var(--on-surface);
+}
+.tech svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+.tech .tech--wide svg {
+  width: auto;
+  height: 24px;
+  aspect-ratio: 24 / 4.84;
+}
+.tech li:last-child:hover svg {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+  50% {
+    transform: scale(1.04, 0.97) rotate(2deg);
+  }
+}
+@keyframes pen-draw {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(-18px, 10px);
+  }
+  60% {
+    transform: translate(8px, 22px);
+  }
+}
+@keyframes march {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+@keyframes pop {
+  0%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.35);
+  }
+}
+@keyframes lift {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes code-type {
+  0% {
+    stroke-dashoffset: 60;
+  }
+  30%,
+  85% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 60;
+  }
+}
+@keyframes snap {
+  0% {
+    transform: translate(18px, 14px) rotate(8deg);
+    opacity: 0;
+  }
+  25%,
+  85% {
+    transform: none;
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 0;
+  }
+}
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes fill-45 {
+  0% {
+    transform: scaleX(0);
+  }
+  40%,
+  90% {
+    transform: scaleX(0.45);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes fill-85 {
+  0% {
+    transform: scaleX(0);
+  }
+  40%,
+  90% {
+    transform: scaleX(0.85);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes fill-70 {
+  0% {
+    transform: scaleX(0);
+  }
+  40%,
+  90% {
+    transform: scaleX(0.7);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes chat-a {
+  0%,
+  45% {
+    opacity: 1;
+    transform: none;
+  }
+  55%,
+  90% {
+    opacity: 0.35;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes chat-b {
+  0%,
+  45% {
+    opacity: 0.35;
+    transform: translateY(4px);
+  }
+  55%,
+  90% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0.35;
+    transform: translateY(4px);
+  }
+}
+@keyframes flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+@keyframes blink-soft {
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}

@@ -1,0 +1,13 @@
+---
+interface Props {
+  class: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg class:list={['doodle doodle--sparks', className]} viewBox="0 0 90 70" aria-hidden="true">
+  <path class="dl-spark" d="M20 8q2 12 14 14q-12 2-14 14q-2-12-14-14q12-2 14-14z"></path>
+  <path class="dl-spark dl-spark--2" d="M66 30q1.5 8 9 9.5q-7.5 1.5-9 9.5q-1.5-8-9-9.5q7.5-1.5 9-9.5z"></path>
+  <circle class="dl-dot" cx="44" cy="58" r="2.5"></circle>
+</svg>

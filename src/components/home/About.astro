@@ -1,0 +1,143 @@
+---
+import { site } from '../../data/site';
+import { stats } from '../../data/stats';
+import TeamSpace from '../art/TeamSpace.astro';
+import PhotoPlaceholder from '../PhotoPlaceholder.astro';
+import StatList from '../StatList.astro';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+import SparksDoodle from '../icons/SparksDoodle.astro';
+
+/*
+ * `angle`: where the connector meets the photo rim (degrees).
+ * `via`: waypoints of the connector as panel fractions, "x,y x,y ...".
+ */
+const team = [
+  { name: 'Egyed Balázs', role: 'webfejlesztő', variant: 'lead', angle: 75, via: '0.86,0.47 0.62,0.70 0.30,0.62' },
+  {
+    name: 'Ágoston Fanni',
+    role: 'projektmenedzser',
+    variant: 'side',
+    angle: 235,
+    via: '0.30,0.97 0.52,0.78 0.42,0.52 0.66,0.40',
+  },
+] as const;
+---
+
+<section class="section section-light about" id="rolunk" aria-labelledby="rolunk-title">
+  <div class="container about-grid">
+    <div class="team-visual reveal">
+      <SparksDoodle class="doodle--team" />
+      <div class="team-panel" aria-hidden="true">
+        <TeamSpace />
+        <svg class="team-net"><!-- name → photo connectors, drawn on the client --></svg>
+      </div>
+
+      {team.map(({ name, role, variant, angle, via }) => {
+        const label = (
+          <p class="team-name">
+            <strong>{name}</strong>
+            <span>{role}</span>
+          </p>
+        );
+        const photo = (
+          <div class="team-photo">
+            <svg class="team-orbit" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="49" />
+            </svg>
+            <PhotoPlaceholder class="placeholder--round" caption={`Kép helye:<br>${name}`} />
+          </div>
+        );
+        return (
+          <div class={`team-member team-member--${variant}`} data-angle={angle} data-via={via}>
+            {variant === 'lead' ? [photo, label] : [label, photo]}
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="about-copy">
+      <p class="eyebrow eyebrow-light reveal">rólunk</p>
+      <h2 id="rolunk-title" class="reveal">
+        Kis csapat, komoly munka
+      </h2>
+      <div class="about-cols reveal">
+        <p>
+          Ketten alkotjuk a csapatot: Balázs programozó, aki dizájnban is gondolkodik. Ő tervezi és fejleszti az
+          oldaladat, ezért nálunk nem ügyfélszolgálattal beszélsz, hanem azzal, aki építi. Fanni a projekteket és a
+          kapcsolattartást kezeli, így minden ügyfélre jut idő és figyelem.
+        </p>
+        <div>
+          <p>
+            Több mint 10 éve fejlesztünk egyedi weboldalakat és webshopokat. Nem sablonból dolgozunk, hanem azt építjük
+            meg, amire valóban szükséged van, és az átadás után is számíthatsz ránk.
+          </p>
+          <a class="link-arrow" href={site.aboutUrl}>
+            Rólunk bővebben <ArrowIcon />
+          </a>
+        </div>
+      </div>
+
+      <StatList class="stats" items={[stats.delivered, stats.clients, stats.years, stats.team, stats.failed]} />
+    </div>
+  </div>
+  <script>
+    import { $, $$ } from '../../scripts/dom';
+
+    // dashed connectors lead from each name to its photo
+    const panel = $('.team-panel');
+    const net = panel && $<SVGSVGElement>('.team-net', panel);
+
+    const f1 = (v: number) => v.toFixed(1);
+
+    function drawNet(): void {
+      if (!panel || !net) return;
+      const P = panel.getBoundingClientRect();
+      if (!P.width) return;
+      net.setAttribute('viewBox', `0 0 ${P.width} ${P.height}`);
+      net.innerHTML = $$('.team-member')
+        .map((member) => {
+          const nameBox = $('.team-name', member)?.getBoundingClientRect();
+          const textBox = $('.team-name strong', member)?.getBoundingClientRect(); // the text itself, not the padded box
+          const photoBox = $('.team-photo .placeholder', member)?.getBoundingClientRect();
+          if (!nameBox || !textBox || !photoBox) return '';
+
+          // start just under the role, wander across the panel, end on the photo's rim
+          const sx = textBox.left - P.left + 6;
+          const sy = nameBox.bottom - P.top + 12;
+          const cx = photoBox.left - P.left + photoBox.width / 2;
+          const cy = photoBox.top - P.top + photoBox.height / 2;
+          const r = photoBox.width / 2 + 8;
+          const th = ((Number(member.dataset.angle) || 0) * Math.PI) / 180;
+          const ex = cx + Math.cos(th) * r;
+          const ey = cy + Math.sin(th) * r;
+          const via = (member.dataset.via ?? '')
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .map((xy): [number, number] => {
+              const [x = 0, y = 0] = xy.split(',').map(Number);
+              return [x * P.width, y * P.height];
+            });
+          const pts: [number, number][] = [[sx, sy], ...via, [ex, ey]];
+
+          // Catmull-Rom → cubic Bézier for one smooth, meandering stroke
+          let d = `M${f1(sx)} ${f1(sy)}`;
+          for (let i = 0; i < pts.length - 1; i++) {
+            const p1 = pts[i];
+            const p2 = pts[i + 1];
+            if (!p1 || !p2) continue;
+            const p0 = pts[i - 1] ?? p1;
+            const p3 = pts[i + 2] ?? p2;
+            d += ` C${f1(p1[0] + (p2[0] - p0[0]) / 6)} ${f1(p1[1] + (p2[1] - p0[1]) / 6)} ${f1(p2[0] - (p3[0] - p1[0]) / 6)} ${f1(p2[1] - (p3[1] - p1[1]) / 6)} ${f1(p2[0])} ${f1(p2[1])}`;
+          }
+          return `<path d="${d}"/><circle class="node-start" cx="${f1(sx)}" cy="${f1(sy)}" r="4"/><circle class="node-end" cx="${f1(ex)}" cy="${f1(ey)}" r="3"/>`;
+        })
+        .join('');
+    }
+
+    drawNet();
+    window.addEventListener('resize', drawNet);
+    window.addEventListener('load', drawNet);
+    void document.fonts.ready.then(drawNet);
+  </script>
+</section>

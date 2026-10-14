@@ -1,0 +1,7 @@
+dist/
+.astro/
+node_modules/
+mentesek/
+tartalek/
+package-lock.json
+DESIGN.md

@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import { byOrder } from '../../data/projects';
+import WorkDoodle from '../art/WorkDoodle.astro';
+import WorkCard from '../cards/WorkCard.astro';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+
+const projects = (await getCollection('projects', ({ data }) => data.showOnHome)).sort(byOrder);
+const featured = projects.find(({ data }) => data.featured);
+const rest = projects.filter((project) => project !== featured);
+---
+
+<section class="section section-light section-tint work-section" id="munkaink" aria-labelledby="munkaink-title">
+  <div class="container">
+    <header class="work-head reveal">
+      <WorkDoodle />
+      <div>
+        <p class="eyebrow eyebrow-light">munkáink</p>
+        <h2 id="munkaink-title">Sikertörténetek</h2>
+        <p>Ügyfeleink, akiknél a weboldal ma már dolgozik helyettük.</p>
+      </div>
+    </header>
+
+    {featured && <WorkCard project={featured} feature compact />}
+
+    <div class="work-grid">
+      {rest.map((project) => (
+        <WorkCard project={project} compact />
+      ))}
+    </div>
+
+    <p class="swipe-hint" aria-hidden="true">
+      ← húzd oldalra →
+    </p>
+    <div class="services-cta work-more reveal">
+      <svg class="work-divider" viewBox="0 0 640 40" aria-hidden="true">
+        <path class="wd-line" d="M0 20H272M368 20H640"></path>
+        <path class="wd-spark" d="M232 12q1.2 6.8 8 8q-6.8 1.2-8 8q-1.2-6.8-8-8q6.8-1.2 8-8z"></path>
+        <path class="wd-spark wd-spark--2" d="M408 14q1 5 6 6q-5 1-6 6q-1-5-6-6q5-1 6-6z"></path>
+        <g class="wd-planet">
+          <g transform="rotate(-14 320 20)">
+            <ellipse class="wd-ring" cx="320" cy="20" rx="30" ry="7"></ellipse>
+          </g>
+          <circle class="wd-body" cx="320" cy="20" r="13"></circle>
+          <path class="wd-band" d="M309 16q11-4 22 0M309 25q11 3 22 0"></path>
+          <g transform="rotate(-14 320 20)">
+            <path class="wd-ring" d="M350 20a30 7 0 0 1 -60 0"></path>
+          </g>
+        </g>
+      </svg>
+      <p>Nézd meg, kiknek segítettünk már!</p>
+      <a class="btn btn-primary" href="/munkaink/">
+        Összes projekt <ArrowIcon />
+      </a>
+    </div>
+  </div>
+</section>

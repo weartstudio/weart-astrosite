@@ -1,0 +1,294 @@
+/* ---------- work: first block after the hero – one featured case + three ---------- */
+.work-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-bottom: 40px;
+}
+.work-head h2 {
+  margin: 0 0 8px;
+}
+.work-head p:last-child {
+  margin: 0;
+  color: var(--muted);
+}
+.work-more {
+  margin-top: 88px;
+  max-width: none;
+}
+.work-divider {
+  display: block;
+  width: min(100%, 640px);
+  height: auto;
+  margin: 0 auto 40px;
+  overflow: visible;
+}
+.work-divider .wd-line {
+  fill: none;
+  stroke: rgba(5, 26, 45, 0.28);
+  stroke-width: 1.6;
+  stroke-dasharray: 3 7;
+  stroke-linecap: round;
+}
+.work-divider .wd-spark {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dl-twinkle 2.8s ease-in-out infinite alternate;
+}
+.work-divider .wd-spark--2 {
+  fill: var(--raised);
+  animation-delay: -1.4s;
+}
+.work-divider .wd-body {
+  fill: #7fc8f0;
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.work-divider .wd-band {
+  fill: none;
+  stroke: rgba(5, 26, 45, 0.3);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.work-divider .wd-ring {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.work-divider .wd-planet {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dl-float 8s ease-in-out infinite alternate;
+}
+.work-more p {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 767px) {
+  .work-more {
+    margin-top: 64px;
+  }
+  .work-divider {
+    margin-bottom: 28px;
+  }
+}
+
+.work {
+  --frame: #aedfdd; /* same mint as the service + about panels */
+  text-decoration: none;
+  display: block;
+  color: var(--on-surface);
+}
+.work-frame {
+  background: var(--frame);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  padding: 28px 28px 0;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+/* concentric rings from the top-right corner – gives each frame a bit of depth */
+.work-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-radial-gradient(circle at 100% 0, transparent 0 34px, rgba(252, 254, 255, 0.13) 34px 35px);
+  -webkit-mask-image: radial-gradient(circle at 100% 0, #000, transparent 75%);
+  mask-image: radial-gradient(circle at 100% 0, #000, transparent 75%);
+}
+
+/* két képernyőkép egymásba csúsztatva + mobilkép elöl – egy egységként mozog */
+.work-stack {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 400ms var(--ease-out);
+}
+.shot {
+  position: absolute;
+  box-shadow: var(--shadow-frame);
+  font-size: 11px;
+  padding: 12px;
+  transition: transform var(--slow) var(--ease-out);
+}
+.shot--back {
+  left: 0;
+  right: 38%;
+  top: 20%;
+  bottom: 0;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  place-items: start;
+  text-align: left;
+}
+.shot--back span {
+  max-width: 40%;
+}
+.shot--front {
+  left: 30%;
+  right: 8%;
+  top: 4%;
+  bottom: 0;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  z-index: 1;
+}
+.shot--phone {
+  right: 0;
+  bottom: 6%;
+  width: 19%;
+  aspect-ratio: 9 / 19.5;
+  z-index: 2;
+  border-radius: 14px;
+  border: 4px solid var(--trench);
+  outline: 1px solid var(--line-on-dark);
+  padding: 6px;
+  font-size: 9px;
+  box-shadow: 0 18px 30px -16px rgba(5, 26, 45, 0.35);
+}
+.shot--phone::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 30%;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--trench);
+  transform: translateX(-50%);
+}
+.shot--back,
+.shot--front {
+  transform: translateY(14px);
+}
+.work:hover .shot--front {
+  transform: translateY(0);
+}
+.work:hover .shot--back {
+  transform: translateY(4px) translateX(-6px);
+}
+.work:hover .shot--phone {
+  transform: translateY(-10px) rotate(2deg);
+}
+
+/* the stack assembles itself when it scrolls in (uses `translate`, so hover `transform` stays free) */
+.js .work.is-visible .shot--back {
+  animation: shot-in-back 0.9s var(--ease-out) calc(var(--rd, 0ms) + 150ms) backwards;
+}
+.js .work.is-visible .shot--front {
+  animation: shot-in-front 0.9s var(--ease-out) calc(var(--rd, 0ms) + 50ms) backwards;
+}
+.js .work.is-visible .shot--phone {
+  animation: shot-in-phone 1s var(--ease-out) calc(var(--rd, 0ms) + 400ms) backwards;
+}
+@keyframes shot-in-back {
+  from {
+    translate: -40px 30px;
+    opacity: 0;
+  }
+}
+@keyframes shot-in-front {
+  from {
+    translate: 0 60px;
+    opacity: 0;
+  }
+}
+@keyframes shot-in-phone {
+  from {
+    translate: 30px 80px;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .shot {
+    font-size: 9px;
+    padding: 8px;
+  }
+  .shot--phone {
+    font-size: 7px;
+    border-width: 3px;
+    border-radius: 10px;
+  }
+}
+
+/* frame tones: on the dark/teal frames the placeholders stay dark; on the pale frame they lighten up */
+.work-frame .placeholder {
+  color: var(--footer-text);
+  border-color: var(--line-on-dark);
+  background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(0, 194, 203, 0.06) 10px 11px), var(--trench);
+}
+.work-frame .shot--phone.placeholder {
+  background-color: var(--trench);
+}
+
+.work h3 {
+  font-size: 19px;
+  margin: 0;
+  transition: color var(--fast) ease;
+}
+.work:hover h3 {
+  color: var(--tertiary);
+}
+
+/* featured case: stack left, story right */
+.work--feature {
+  margin-bottom: 56px;
+}
+.work--feature .work-frame {
+  margin-bottom: 24px;
+}
+.work-body {
+  position: relative;
+}
+.work--feature h3 {
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+.work-lead {
+  color: var(--muted);
+  margin: 0 0 4px;
+  max-width: 46ch;
+}
+.work--feature .link-arrow {
+  margin-top: 24px;
+}
+@media (min-width: 992px) {
+  .work--feature {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .work--feature .work-frame {
+    margin-bottom: 0;
+    padding: 40px 40px 0;
+  }
+}
+
+.work-grid {
+  display: grid;
+  gap: 40px 32px;
+  margin-bottom: var(--s-lg);
+}
+@media (min-width: 768px) {
+  .work-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .work-grid .work-frame {
+    padding: 18px 18px 0;
+  }
+}
+.section-light .link-arrow svg {
+  stroke: var(--tertiary);
+}

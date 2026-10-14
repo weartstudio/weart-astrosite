@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo-dark.png';
+import { getNavLinks, type NavKey } from '../../data/site';
+
+interface Props {
+  current: NavKey;
+  /** Shows the reading progress bar under the header (article pages). */
+  readProgress?: boolean;
+}
+
+const { current, readProgress = false } = Astro.props;
+const navLinks = getNavLinks(current);
+const homeHref = current === 'home' ? '#top' : '/';
+---
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="logo" href={homeHref} aria-label="Weart, kezdőlap">
+      <Image src={logo} alt="Weart" widths={[116, 232]} sizes="116px" loading="eager" fetchpriority="high" />
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Fő navigáció">
+      {navLinks.map(({ label, href, key }) => {
+        const active = key !== null && key === current;
+        return (
+          <a href={href} class:list={{ 'is-active': active }} aria-current={active ? 'page' : undefined}>
+            {label}
+          </a>
+        );
+      })}
+      <a class="btn btn-primary btn-sm nav-cta" href="#kapcsolat">
+        Kapcsolat
+      </a>
+    </nav>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      aria-label="Menü megnyitása"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  {readProgress && (
+    <div class="read-progress" aria-hidden="true">
+      <span />
+    </div>
+  )}
+</header>
+
+<script>
+  import { $, $$ } from '../../scripts/dom';
+
+  const header = $('.site-header');
+  const toggle = $<HTMLButtonElement>('.menu-toggle');
+  const nav = $('#main-nav');
+
+  if (header) {
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  if (toggle && nav) {
+    const setMenu = (open: boolean) => {
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Menü bezárása' : 'Menü megnyitása');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    toggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+    $$('a', nav).forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setMenu(false);
+    });
+
+    // home page: highlight the link of the section in view
+    const sectionLinks = $$<HTMLAnchorElement>('a[href^="#"]:not(.btn)', nav);
+    if (sectionLinks.length && 'IntersectionObserver' in window) {
+      const navIo = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            sectionLinks.forEach((a) =>
+              a.classList.toggle('is-active', a.getAttribute('href') === `#${entry.target.id}`),
+            );
+          }
+        },
+        { rootMargin: '-45% 0px -50% 0px' },
+      );
+      sectionLinks
+        .map((a) => document.getElementById(a.hash.slice(1)))
+        .filter((el): el is HTMLElement => el !== null)
+        .forEach((section) => navIo.observe(section));
+    }
+  }
+</script>

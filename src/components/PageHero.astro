@@ -1,0 +1,39 @@
+---
+/** Compact dark hero for subpages, in the same space theme as the home hero. Content goes in the default slot. */
+interface Props {
+  article?: boolean;
+}
+
+const { article = false } = Astro.props;
+---
+
+<section class:list={['hero hero--page section-dark', { 'hero--article': article }]} aria-labelledby="page-title">
+  <div class="hero-glow" aria-hidden="true">
+    <span></span>
+    <span></span>
+  </div>
+  <svg class="space space--page" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <g class="stars"></g>
+    <g class="shooting">
+      <path d="M0 0 L-140 -46"></path>
+    </g>
+    <g class="planet planet--small">
+      <g transform="rotate(18 1240 640)">
+        <path class="planet-ring planet-ring--back" d="M1050 640 a190 46 0 0 1 380 0"></path>
+      </g>
+      <circle cx="1240" cy="640" r="100" fill="url(#planet-fill)"></circle>
+      <circle class="crater" cx="1206" cy="610" r="12"></circle>
+      <circle class="crater" cx="1272" cy="664" r="7"></circle>
+      <g transform="rotate(18 1240 640)">
+        <path class="planet-ring" d="M1430 640 a190 46 0 0 1 -380 0"></path>
+      </g>
+    </g>
+    {!article && <circle class="moon-dot" cx="1020" cy="420" r="9" />}
+  </svg>
+  <div class="container page-hero">
+    <slot />
+  </div>
+  <script>
+    import '../scripts/starfield';
+  </script>
+</section>

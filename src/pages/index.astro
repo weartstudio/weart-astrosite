@@ -1,0 +1,45 @@
+---
+import About from '../components/home/About.astro';
+import Benefits from '../components/home/Benefits.astro';
+import ClientMarquee from '../components/home/ClientMarquee.astro';
+import Faq from '../components/home/Faq.astro';
+import Hero from '../components/home/Hero.astro';
+import Services from '../components/home/Services.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import WorkSection from '../components/home/WorkSection.astro';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Weart, Egyed Balázs webfejlesztő',
+  url: `${site.url}/`,
+  email: site.email,
+  telephone: site.phone.schema,
+  description: 'Egyedi WordPress weboldalak és WooCommerce webshopok fejlesztése.',
+  founder: { '@type': 'Person', name: 'Egyed Balázs', jobTitle: 'WordPress fejlesztő' },
+  areaServed: 'HU',
+  sameAs: [site.socials.facebook, site.socials.github],
+};
+---
+
+<BaseLayout
+  title="Egyedi weboldal és webshop készítés · Weart, WordPress fejlesztés | Egyed Balázs és csapata"
+  description="Egyedi, villámgyors WordPress weboldalak és WooCommerce webshopok. 10+ év tapasztalat, 150+ átadott weboldal, 90+ elégedett ügyfél."
+  nav="home"
+  og={{
+    title: 'Weboldal, ami ügyfeleket hoz · Weart, WordPress fejlesztés',
+    description: 'Egyedi weboldalak és webshopok, sablonok nélkül. 150+ átadott weboldal, 90+ elégedett ügyfél.',
+  }}
+  jsonLd={jsonLd}
+>
+  <Hero />
+  <ClientMarquee />
+  <WorkSection />
+  <Benefits />
+  <Testimonials />
+  <Services />
+  <About />
+  <Faq />
+</BaseLayout>

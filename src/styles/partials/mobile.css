@@ -1,0 +1,72 @@
+/* ---------- mobile: shorter page via swipeable rows ---------- */
+@media (max-width: 767px) {
+  .section {
+    padding: 56px 0;
+  }
+  .work-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin: 0 -20px var(--s-lg);
+    padding: 0 20px 12px;
+    gap: 16px;
+    scrollbar-width: none;
+    scroll-padding-inline: 20px;
+  }
+  .work-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .work {
+    scroll-snap-align: start;
+  }
+  .work-frame {
+    padding: 18px 18px 0;
+  }
+  .benefit-art {
+    width: 96px;
+    height: 64px;
+    margin-bottom: 12px;
+  }
+  .swipe-hint {
+    display: block;
+  }
+}
+.swipe-hint {
+  display: none;
+  font: 500 12px var(--font-mono);
+  letter-spacing: 0.08em;
+  color: var(--footer-text);
+  margin: -16px 0 24px;
+}
+@media (max-width: 767px) {
+  .hero {
+    padding-top: 112px;
+  }
+  .hero-visual {
+    width: min(82%, 330px);
+  }
+  .code-card {
+    left: -8%;
+    width: 74%;
+  }
+  .code-body {
+    min-height: 104px;
+    font-size: 11px;
+  }
+  .speed-card {
+    right: -8%;
+    top: 4%;
+    padding: 8px 12px;
+  }
+  .gauge {
+    width: 84px;
+  }
+  .chip-card {
+    right: -10%;
+    bottom: 30%;
+    font-size: 12px;
+  }
+}

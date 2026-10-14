@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog · Weart, tippek weboldalról, webshopról és WordPressről</title>
+  <meta name="description" content="Gyakorlati cikkek vállalkozóknak weboldal- és webshopkészítésről, és mélyebb fejlesztői írások WordPress és WooCommerce témában.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog · Weart, WordPress fejlesztés">
+  <meta property="og:description" content="Amit a weboldalakról tudni érdemes: cikkek vállalkozóknak és fejlesztőknek.">
+  <meta property="og:url" content="https://weart.hu/blog/">
+  <meta property="og:locale" content="hu_HU">
+  <meta name="theme-color" content="#051A2D">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Ugrás a tartalomra</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Weart, kezdőlap">
+        <img src="images/logo-dark.png" alt="Weart" width="642" height="335">
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Fő navigáció">
+        <a href="munkaink.html">Munkáink</a>
+        <a href="index.html#szolgaltatasok">Szolgáltatások</a>
+        <a href="index.html#rolunk">Rólunk</a>
+        <a href="blog.html" class="is-active" aria-current="page">Blog</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="#kapcsolat">Kapcsolat</a>
+      </nav>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menü megnyitása">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="hero hero--page section-dark" aria-labelledby="page-title">
+      <div class="hero-glow" aria-hidden="true"><span></span><span></span></div>
+      <svg class="space space--page" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="planet-fill" cx="35%" cy="30%" r="75%">
+            <stop offset="0" stop-color="#2B7C93"/><stop offset=".55" stop-color="#124257"/><stop offset="1" stop-color="#071F30"/>
+          </radialGradient>
+        </defs>
+        <g class="stars"></g>
+        <g class="shooting"><path d="M0 0 L-140 -46"/></g>
+        <g class="planet planet--small">
+          <g transform="rotate(18 1240 640)"><path class="planet-ring planet-ring--back" d="M1050 640 a190 46 0 0 1 380 0"/></g>
+          <circle cx="1240" cy="640" r="100" fill="url(#planet-fill)"/>
+          <circle class="crater" cx="1206" cy="610" r="12"/><circle class="crater" cx="1272" cy="664" r="7"/>
+          <g transform="rotate(18 1240 640)"><path class="planet-ring" d="M1430 640 a190 46 0 0 1 -380 0"/></g>
+        </g>
+        <circle class="moon-dot" cx="1020" cy="420" r="9"/>
+      </svg>
+      <div class="container page-hero">
+        <p class="eyebrow eyebrow-dark reveal">blog</p>
+        <h1 id="page-title" class="reveal">Amit a weboldalakról <span class="hl">tudni érdemes</span>.</h1>
+        <p class="lead reveal">Gyakorlati cikkek vállalkozóknak a weboldal- és webshopkészítésről, és néhány mélyebb írás fejlesztőknek WordPress és WooCommerce témában.</p>
+      </div>
+    </section>
+
+    <!-- ============ POSTS ============ -->
+    <section class="section section-light section-tint work-section blog-list" id="cikkek" aria-labelledby="cikkek-title">
+      <div class="container">
+        <h2 id="cikkek-title" class="sr-only">Legfrissebb cikkek</h2>
+
+        <!-- szűrő: a gombok a kártyák data-tags értékére szűrnek, a darabszámot a main.js tölti ki -->
+        <div class="work-filter reveal" role="group" aria-label="Cikkek szűrése téma szerint" data-noun="cikk">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">Összes <span class="chip-count">10</span></button>
+          <button class="chip" type="button" data-filter="weboldal" aria-pressed="false">Weboldal készítés <span class="chip-count"></span></button>
+          <button class="chip" type="button" data-filter="wordpress" aria-pressed="false">WordPress <span class="chip-count"></span></button>
+          <button class="chip" type="button" data-filter="woocommerce" aria-pressed="false">WooCommerce <span class="chip-count"></span></button>
+          <button class="chip" type="button" data-filter="programozas" aria-pressed="false">Programozás <span class="chip-count"></span></button>
+          <button class="chip" type="button" data-filter="egyeb" aria-pressed="false">Egyéb <span class="chip-count"></span></button>
+        </div>
+        <p class="sr-only" id="filter-status" role="status" aria-live="polite"></p>
+
+        <!-- legfrissebb cikk, kiemelve -->
+        <a class="post-card post-card--feature reveal" href="https://new.weart.hu/posts/foglalo-rendszer-a-weboldaladba/" data-tags="weboldal wordpress woocommerce">
+          <div class="post-cover placeholder"><span>Borítókép helye<br>Foglaló rendszer</span></div>
+          <div class="post-body">
+            <p class="eyebrow eyebrow-light">Legfrissebb · Weboldal készítés</p>
+            <h3>Foglaló rendszer a weboldaladba?</h3>
+            <p class="post-excerpt">Gondolkodóban vagy, hogy foglaló rendszert szeretnél a weboldaladba? Segítünk eldönteni, mire van szükséged.</p>
+            <p class="post-meta mono"><time datetime="2025-08-19">2025.08.19.</time> · 3 perc olvasás</p>
+            <span class="link-arrow">Elolvasom <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
+          </div>
+        </a>
+
+        <div class="post-grid">
+          <a class="post-card reveal" href="https://new.weart.hu/posts/egyoldalas-weboldal/" data-tags="weboldal programozas">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">Weboldal készítés</p>
+              <h3>Egyoldalas weboldal? Mikor érdemes ezt választani?</h3>
+              <p class="post-excerpt">Hallottál már az egyoldalas weboldalról, de nem tudod, neked jó lenne-e? Segítünk eldönteni.</p>
+              <p class="post-meta mono"><time datetime="2025-08-14">2025.08.14.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="blog-cikk.html" data-tags="weboldal wordpress">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">WordPress</p>
+              <h3>Plugin a weboldaladra? Szükséges?</h3>
+              <p class="post-excerpt">Webfejlesztés előtt állsz, és nem tudod, melyik plugint telepítsd? Néhány lépésben segítünk dönteni.</p>
+              <p class="post-meta mono"><time datetime="2025-08-01">2025.08.01.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/blog-a-weboldalra-es-a-webshopra/" data-tags="weboldal">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">Weboldal készítés</p>
+              <h3>Blog a weboldalon? Van értelme?</h3>
+              <p class="post-excerpt">Weboldalt szeretnél, és azon gondolkodsz, érdemes-e blogot is írni rajta? Néhány pontban válaszolunk.</p>
+              <p class="post-meta mono"><time datetime="2025-07-25">2025.07.25.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/keresooptimalizalt-tartalom/" data-tags="wordpress">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">WordPress</p>
+              <h3>Érdemes magunknak készíteni a keresőoptimalizált tartalmat?</h3>
+              <p class="post-excerpt">Összeszedtük az előnyeit és a hátrányait annak, ha a keresőoptimalizált tartalmat szakértőre bízod.</p>
+              <p class="post-meta mono"><time datetime="2025-07-15">2025.07.15.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/weboldal-latogatoinak-vezetese/" data-tags="weboldal">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">Weboldal készítés</p>
+              <h3>A weboldal látogatóinak vezetése: hogyan csináljuk jól?</h3>
+              <p class="post-excerpt">Néhány tipp ahhoz, hogy a weboldalad látogatói könnyen megtalálják, amit keresnek, és szívesen maradjanak.</p>
+              <p class="post-meta mono"><time datetime="2025-07-09">2025.07.09.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/mi-az-a-cms-tartalomkezelo-rendszer-es-miert-erdemes-hasznalnod/" data-tags="weboldal">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">Weboldal készítés</p>
+              <h3>Mi az a CMS tartalomkezelő rendszer, és miért érdemes használnod?</h3>
+              <p class="post-excerpt">Mi az a CMS, hogyan működik, és miért lehet előnyös a weboldalad számára? Útmutató kezdőknek és vállalkozóknak.</p>
+              <p class="post-meta mono"><time datetime="2025-05-21">2025.05.21.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/hogyan-keszits-custom-post-type-ot-wordpress-alatt/" data-tags="programozas wordpress">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">Programozás</p>
+              <h3>Hogyan készíts Custom Post Type-ot WordPress alatt?</h3>
+              <p class="post-excerpt">Alapból csak három tartalomtípust kapunk a WordPressben, de a Custom Post Type-pal egyszerűen hozhatunk létre egyedieket.</p>
+              <p class="post-meta mono"><time datetime="2021-06-12">2021.06.12.</time> · 5 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/hogyan-lehet-dinamikusan-elkerni-a-woocommerce-oldal-urlt/" data-tags="programozas woocommerce">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">WooCommerce</p>
+              <h3>Hogyan lehet dinamikusan elkérni a WooCommerce oldal URL-eket?</h3>
+              <p class="post-excerpt">Webshop fejlesztésekor számolni kell azzal, hogy a WooCommerce oldalak címe megváltozhat. Mutatjuk, hogyan kezeld.</p>
+              <p class="post-meta mono"><time datetime="2021-04-03">2021.04.03.</time> · 3 perc</p>
+            </div>
+          </a>
+
+          <a class="post-card reveal" href="https://new.weart.hu/posts/miert-ne-hasznaljunk-weboldal-masolasvedelem-funkciot/" data-tags="egyeb">
+            <div class="post-cover placeholder"><span>Borítókép helye</span></div>
+            <div class="post-body">
+              <p class="eyebrow eyebrow-light">Egyéb</p>
+              <h3>3 indok, hogy miért ne használj másolásvédelmet a weboldalon</h3>
+              <p class="post-excerpt">Sokan kérik, hogy tegyünk másolásvédelmet a weboldalukra. Első látásra jogos kérés, mégsem jó ötlet.</p>
+              <p class="post-meta mono"><time datetime="2021-04-02">2021.04.02.</time> · 4 perc</p>
+            </div>
+          </a>
+        </div>
+
+        <nav class="pagination" aria-label="Oldalak">
+          <span class="mono" aria-current="page">1</span>
+          <a class="mono" href="https://new.weart.hu/posts/page/2/">2</a>
+          <a class="mono" href="https://new.weart.hu/posts/page/3/">3</a>
+          <a class="mono pagination-next" href="https://new.weart.hu/posts/page/2/" aria-label="Következő oldal"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section-dark contact" id="kapcsolat" aria-labelledby="kapcsolat-title">
+      <svg class="space space--contact" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <g class="stars"></g>
+        <g class="shooting"><path d="M0 0 L-140 -46"/></g>
+        <g class="planet planet--small">
+          <g transform="rotate(18 1300 120)"><path class="planet-ring planet-ring--back" d="M1150 120 a150 36 0 0 1 300 0"/></g>
+          <circle cx="1300" cy="120" r="80" fill="url(#planet-fill)"/>
+          <circle class="crater" cx="1272" cy="96" r="10"/><circle class="crater" cx="1326" cy="140" r="6"/>
+          <g transform="rotate(18 1300 120)"><path class="planet-ring" d="M1450 120 a150 36 0 0 1 -300 0"/></g>
+        </g>
+        <circle class="moon-dot" cx="1120" cy="250" r="9"/>
+      </svg>
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow eyebrow-dark reveal">beszélgessünk</p>
+          <h2 id="kapcsolat-title" class="reveal">Mesélj a projektedről!</h2>
+          <p class="reveal">Köszönjük, hogy időt szánsz ránk! Küldj pár sort a projektedről, hogy lássuk, hogyan tudunk a legtöbbet segíteni. Gyorsan és személyesen válaszolunk.</p>
+
+          <ul class="contact-direct reveal">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              <a href="mailto:info@weart.hu">info@weart.hu</a>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
+              <a href="tel:+36301958114">+36 30 / 195 8114</a>
+            </li>
+          </ul>
+          <div class="contact-person reveal">
+            <figure class="placeholder placeholder--round contact-avatar" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="17" r="8"/><path d="M8 42c2-9 8-13 16-13s14 4 16 13"/></svg>
+              <figcaption>Fanni<br>képe</figcaption>
+            </figure>
+            <p><strong>Ágoston Fanni</strong><span>A megkereséseket ő kezeli: egy állandó kapcsolattartód lesz az első üzenettől az átadásig.</span></p>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form" novalidate>
+          <div class="field">
+            <label for="f-name">Név*</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-email">E-mail*</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefonszám*</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-type">Miben segíthetünk?</label>
+            <select id="f-type" name="type">
+              <option>Új weboldal</option>
+              <option>Webshop</option>
+              <option>Meglévő oldal fejlesztése</option>
+              <option>Karbantartás, támogatás</option>
+              <option>Még nem tudom</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-msg">Üzenet*</label>
+            <textarea id="f-msg" name="message" rows="4" required placeholder="Pár mondat a projektedről és arról, mit szeretnél elérni."></textarea>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Üzenet küldése</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="form-hint">Az üzenetküldés nem kötelez semmire.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="footer-logo" href="#top"><img src="images/logo-dark.png" alt="Weart, vissza az oldal tetejére" width="642" height="335" loading="lazy"></a>
+      <p>Személyre szabott weboldalak, webáruházak és egyedi webalkalmazások 10+ év tapasztalattal és 90+ elégedett ügyféllel.</p>
+      <nav aria-label="Lábléc">
+        <a href="https://facebook.com/weartweb">Facebook</a>
+        <a href="https://github.com/weartstudio">GitHub</a>
+        <a href="blog.html">Blog</a>
+        <a href="https://new.weart.hu/legal/">Jogi dolgok</a>
+      </nav>
+      <p class="copyright">© 2019–<span id="year">2026</span> Weart · Egyed Balázs</p>
+    </div>
+  </footer>
+
+  <a class="mobile-cta btn btn-primary" href="#kapcsolat">Beszélgessünk</a>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

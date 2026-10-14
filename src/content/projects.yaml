@@ -1,0 +1,96 @@
+# Projects shown on the home page and on /munkaink/.
+# `filters` drives the filter chips, `labels` are the visible tags on the card.
+- id: hymato
+  name: Hymato.hu
+  title: 'Újraterveztük és többnyelvűvé tettük: az eredmény forgalomnövekedés'
+  lead: Modern, gyors és több nyelven elérhető új weboldal. A megújulás óta nőtt a látogatottság.
+  url: https://new.weart.hu/posts/project/hymato-hu/
+  filters: [weboldal, ujratervezes]
+  labels: [WordPress, Többnyelvű, Újratervezés]
+  shotLabel: Hymato.hu
+  featured: true
+  showOnHome: true
+  order: 1
+
+- id: szerszamot
+  name: Szerszámot.eu
+  title: Elavult webshopból modern WooCommerce webáruház
+  url: https://new.weart.hu/posts/project/szerszamot-eu/
+  filters: [webshop, ujratervezes]
+  labels: [WooCommerce, Újratervezés]
+  shotLabel: Szerszámot.eu
+  showOnHome: true
+  order: 2
+
+- id: szuri-kata
+  name: Szuri-Káta Állatorvosi Rendelő
+  shortName: Szuri-Káta
+  title: Gondozásmentes weboldal egy állatorvosi rendelőnek
+  url: https://new.weart.hu/posts/project/szuri-kata/
+  filters: [weboldal]
+  labels: [WordPress, Bemutatkozó oldal]
+  shotLabel: Szuri-Káta
+  showOnHome: true
+  order: 3
+
+- id: amberg-audio
+  name: Amberg Audio
+  title: Teljesen megújult megjelenés és online árlista
+  url: https://new.weart.hu/posts/project/amberg-audio/
+  filters: [weboldal, ujratervezes]
+  labels: [WordPress, Újratervezés]
+  shotLabel: Amberg Audio
+  showOnHome: true
+  order: 4
+
+# VÁZLAT: cím és link ellenőrizendő
+- id: palantax
+  name: Palantax
+  title: Letisztult céges weboldal, ami első ránézésre bizalmat épít
+  filters: [weboldal]
+  labels: [WordPress, Céges oldal]
+  shotLabel: Palantax
+  order: 5
+
+# VÁZLAT: cím és link ellenőrizendő
+- id: uveg-trend
+  name: Üveg Trend Plusz Kft.
+  title: Referenciákra épülő weboldal egy üvegtechnikai cégnek
+  filters: [weboldal]
+  labels: [WordPress, Galéria]
+  shotLabel: Üveg Trend Plusz
+  phoneLabel: Üveg Trend
+  order: 6
+
+# VÁZLAT: cím és link ellenőrizendő
+- id: szentgali-csaba
+  name: Szentgáli Csaba, operatőr
+  title: Portfólió oldal, ahol a mozgókép kerül előtérbe
+  filters: [weboldal]
+  labels: [WordPress, Portfólió]
+  shotLabel: Szentgáli Csaba
+  order: 7
+
+# ÜRES HELY: új projekt
+- id: ures-1
+  name: Projekt neve
+  title: Egy mondat arról, milyen problémát oldottunk meg
+  filters: [webshop]
+  labels: [WooCommerce, Címke]
+  order: 8
+
+# ÜRES HELY: új projekt
+- id: ures-2
+  name: Projekt neve
+  title: Egy mondat arról, milyen problémát oldottunk meg
+  filters: [weboldal]
+  labels: [WordPress, Címke]
+  order: 9
+
+# ÜRES HELY: új projekt
+- id: ures-3
+  name: Projekt neve
+  title: Egy mondat arról, milyen problémát oldottunk meg
+  filters: [webshop]
+  labels: [WooCommerce, Címke]
+  order: 10

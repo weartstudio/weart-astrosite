@@ -1,0 +1,212 @@
+/* ---------- space theme across the page ---------- */
+/* section labels open with a little sparkle */
+.section-head > .eyebrow::before,
+.work-head .eyebrow::before,
+.about-copy > .eyebrow::before,
+.contact-copy > .eyebrow::before,
+.hero-copy > .eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  margin-right: 0.55em;
+  vertical-align: -2px;
+  background: currentColor;
+  clip-path: var(--sparkle);
+}
+/* hand-drawn doodles in the illustrations' ink style */
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+}
+.doodle .dl-line {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.doodle .dl-fill {
+  fill: var(--secondary);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.doodle .dl-band {
+  fill: none;
+  stroke: rgba(5, 26, 45, 0.35);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.doodle .dl-paper {
+  fill: var(--raised);
+  stroke: var(--art-ink);
+  stroke-width: 2;
+}
+.doodle .dl-crater {
+  fill: #d6eef0;
+  stroke: var(--art-ink);
+  stroke-width: 1.6;
+}
+.doodle .dl-spark {
+  fill: var(--primary);
+  stroke: var(--art-ink);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dl-twinkle 2.8s ease-in-out infinite alternate;
+}
+.doodle .dl-spark--2 {
+  fill: var(--secondary);
+  animation-delay: -1.4s;
+}
+.doodle .dl-dot {
+  fill: var(--art-ink);
+}
+.doodle--moon {
+  animation: dl-float 7s ease-in-out infinite alternate;
+}
+@keyframes dl-float {
+  from {
+    transform: translateY(-5px) rotate(-3deg);
+  }
+  to {
+    transform: translateY(6px) rotate(3deg);
+  }
+}
+@keyframes dl-twinkle {
+  from {
+    transform: scale(0.7) rotate(0deg);
+  }
+  to {
+    transform: scale(1.1) rotate(20deg);
+  }
+}
+
+.work-head {
+  position: relative;
+}
+.doodle--work {
+  width: 300px;
+  right: -10px;
+  top: -60px;
+}
+.doodle--work .dl-orbit {
+  fill: none;
+  stroke: rgba(5, 26, 45, 0.28);
+  stroke-width: 1.6;
+  stroke-dasharray: 3 7;
+}
+.doodle--work .dl-ring {
+  stroke-width: 2.4;
+}
+.doodle--work .wk-planet {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dl-float 8s ease-in-out infinite alternate;
+}
+.doodle--work .r-hull {
+  fill: var(--raised);
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.doodle--work .r-nose {
+  fill: #7fc8f0;
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.doodle--work .r-fin {
+  fill: #3b8fd9;
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.doodle--work .r-window {
+  fill: #9ed6f5;
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.doodle--work .r-trail {
+  fill: #3b8fd9;
+  opacity: 0.55;
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: plume 0.22s ease-in-out infinite alternate;
+}
+.doodle--work .r-flame {
+  fill: #c0ebf1;
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: flame 0.18s ease-in-out infinite alternate;
+}
+.doodle--work g[transform] {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.has-doodle {
+  position: relative;
+}
+.doodle--moon {
+  width: 76px;
+  left: calc(50% - 320px);
+  top: -6px;
+}
+.quote-wrap {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.doodle--quote {
+  width: 84px;
+  right: -12px;
+  top: -8px;
+}
+.doodle--team {
+  width: 80px;
+  right: -6%;
+  top: 2%;
+  z-index: 2;
+}
+.doodle--faq {
+  width: 84px;
+  left: calc(50% - 430px);
+  top: 4px;
+}
+@media (max-width: 767px) {
+  .doodle--work {
+    width: 150px;
+    right: -8px;
+    top: -46px;
+  }
+  .doodle--moon {
+    width: 56px;
+    left: 0;
+    top: -36px;
+  }
+  .doodle--faq {
+    width: 64px;
+    left: 0;
+    top: -34px;
+  }
+  .doodle--quote {
+    width: 64px;
+    right: 0;
+    top: -24px;
+  }
+  .doodle--team {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doodle,
+  .doodle * {
+    animation: none !important;
+  }
+}
+
+/* contact: a calmer starfield with a small ringed planet */
+.space--contact .planet-ring {
+  stroke-width: 6;
+}
+.space--contact .moon-dot {
+  fill: #c0ebf1;
+  opacity: 0.8;
+}

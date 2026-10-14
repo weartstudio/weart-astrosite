@@ -1,0 +1,461 @@
+/* ---------- hero ---------- */
+.hero {
+  padding: 132px 0 var(--s-xl);
+  overflow: hidden;
+  position: relative;
+  min-height: min(100svh, 900px);
+  display: flex;
+  align-items: center;
+}
+.hero-grid {
+  display: grid;
+  gap: 48px;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+}
+@media (min-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+  }
+}
+.hero h1 {
+  text-wrap: balance;
+}
+.hero .lead {
+  font-size: clamp(17px, 1.6vw, 19px);
+  line-height: 1.65;
+  max-width: 560px;
+}
+.hl {
+  color: var(--primary);
+  position: relative;
+  white-space: nowrap;
+}
+.hl::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 0.12em;
+  background: var(--primary);
+  opacity: 0.35;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: grow-x 0.9s var(--ease-out) 1s forwards;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 32px;
+  margin: 32px 0;
+}
+.hero-proof {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 15px;
+}
+.hero-proof p {
+  margin: 0;
+}
+.hero-proof strong {
+  color: var(--raised);
+}
+.avatars {
+  display: flex;
+}
+.avatars span {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  display: grid;
+  place-items: center;
+  font: 500 11px var(--font-mono);
+  color: var(--abyss);
+  background: var(--secondary);
+  border: 2px solid var(--abyss);
+  margin-left: -10px;
+}
+.avatars span:first-child {
+  margin-left: 0;
+  background: var(--primary);
+}
+.avatars span:nth-child(3) {
+  background: var(--on-dark);
+}
+
+/* hero visual */
+.hero-visual {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+.orbit {
+  position: absolute;
+  inset: 0;
+  animation: spin 40s linear infinite;
+}
+.orbit svg {
+  width: 100%;
+  height: 100%;
+}
+.orbit-ring {
+  fill: none;
+  stroke: var(--line-on-dark);
+  stroke-width: 1;
+}
+.orbit-ring--inner {
+  stroke-dasharray: 4 10;
+}
+.orbit-dot {
+  fill: var(--primary);
+  filter: drop-shadow(0 0 6px var(--primary));
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 16%;
+  border-radius: var(--r-lg);
+}
+
+.float-card {
+  position: absolute;
+  z-index: 2;
+  background: rgba(5, 15, 25, 0.88);
+  border: 1px solid var(--line-on-dark);
+  border-radius: var(--r-md);
+  color: var(--on-dark);
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  transition: transform 600ms var(--ease-out);
+}
+.code-card {
+  left: -6%;
+  bottom: 6%;
+  width: 64%;
+  animation: bob 7s ease-in-out infinite;
+}
+.code-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-on-dark);
+}
+.code-head i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-on-dark);
+}
+.code-head i:first-child {
+  background: var(--primary);
+}
+.code-head span {
+  margin-left: auto;
+  font: 500 11px var(--font-mono);
+  color: var(--footer-text);
+}
+.code-body {
+  margin: 0;
+  padding: 12px;
+  min-height: 118px;
+  font: 500 12px/1.6 var(--font-mono);
+  white-space: pre-wrap;
+}
+.code-body .k {
+  color: var(--primary);
+}
+.code-body .s {
+  color: var(--secondary);
+}
+.code-body .c {
+  color: var(--footer-text);
+}
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background: var(--primary);
+  vertical-align: -2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+.speed-card {
+  right: -4%;
+  top: 8%;
+  padding: 12px 16px;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  animation: bob 8s ease-in-out -2s infinite;
+}
+.speed-card span {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.gauge {
+  width: 110px;
+}
+.gauge-track,
+.gauge-fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+.gauge-track {
+  stroke: var(--line-on-dark);
+}
+.gauge-fill {
+  stroke: var(--primary);
+  stroke-dasharray: 158;
+  stroke-dashoffset: 158;
+  animation: gauge 2.4s var(--ease-out) 0.8s forwards;
+}
+.gauge-needle {
+  stroke: var(--raised);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform-origin: 60px 62px;
+  transform: rotate(-90deg);
+  animation: needle 2.4s var(--ease-out) 0.8s forwards;
+}
+.gauge circle {
+  fill: var(--raised);
+}
+
+.chip-card {
+  right: 2%;
+  bottom: 26%;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--raised);
+  animation: bob 6s ease-in-out -4s infinite;
+}
+.chip-card svg {
+  width: 18px;
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* dot field */
+/* hero: playful space scene (mirrors the rocket in the logo) */
+.space {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.stars circle,
+.stars .sparkle {
+  fill: #e8f7fa;
+  animation: twinkle var(--tw, 4s) ease-in-out var(--twd, 0s) infinite alternate;
+}
+.stars .sparkle {
+  fill: var(--secondary);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes twinkle {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.shooting path {
+  stroke: #e8f7fa;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 140 400;
+  stroke-dashoffset: 140;
+}
+.shooting {
+  animation: shoot 11s linear 3s infinite;
+  opacity: 0;
+}
+@keyframes shoot {
+  0% {
+    transform: translate(1180px, 90px);
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  8% {
+    transform: translate(760px, 228px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(760px, 228px);
+    opacity: 0;
+  }
+}
+.rocket-route {
+  fill: none;
+  stroke: rgba(192, 235, 241, 0.14);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 10;
+  stroke-linecap: round;
+}
+.planet-ring {
+  fill: none;
+  stroke: rgba(174, 223, 221, 0.55);
+  stroke-width: 9;
+}
+.planet-ring--back {
+  stroke: rgba(174, 223, 221, 0.25);
+}
+.planet-bands path {
+  fill: none;
+  stroke: rgba(174, 223, 221, 0.12);
+  stroke-width: 26;
+  stroke-linecap: round;
+}
+.planet-bands {
+  animation: bands 90s linear infinite;
+}
+@keyframes bands {
+  to {
+    transform: translateX(-700px);
+  }
+}
+.crater {
+  fill: rgba(5, 26, 45, 0.28);
+}
+.moon circle {
+  fill: #c0ebf1;
+}
+.moon .moon-crater {
+  fill: rgba(5, 26, 45, 0.18);
+}
+/* rocket drawn like the logo: light hull, blue window + fins, navy outline, blue swoosh */
+.rocket-hull {
+  fill: #f3f9fa;
+  stroke: var(--abyss);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+}
+.rocket-nose {
+  fill: #7fc8f0;
+  stroke: var(--abyss);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+}
+.rocket-fin {
+  fill: #3b8fd9;
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.rocket-window {
+  fill: #9ed6f5;
+  stroke: var(--abyss);
+  stroke-width: 2.4;
+}
+.rocket-glint {
+  fill: #fff;
+}
+.rocket-trail {
+  fill: url(#trail-fill);
+}
+.rocket-trail--soft {
+  opacity: 0.45;
+}
+/* the plume flickers like the small flame, just a touch slower and offset */
+.rocket-trail {
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: plume 0.22s ease-in-out infinite alternate;
+}
+.rocket-trail--soft {
+  animation-duration: 0.27s;
+  animation-delay: -0.1s;
+}
+@keyframes plume {
+  from {
+    transform: scaleX(0.86) scaleY(0.94);
+  }
+  to {
+    transform: scaleX(1.08) scaleY(1.04);
+  }
+}
+.rocket-flame {
+  fill: #c0ebf1;
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: flame 0.18s ease-in-out infinite alternate;
+}
+@keyframes flame {
+  to {
+    transform: scaleX(1.35);
+  }
+}
+@media (max-width: 767px) {
+  .rocket,
+  .rocket-route {
+    display: none;
+  }
+}
+.rocket-body {
+  animation: wobble 3.2s ease-in-out infinite alternate;
+}
+@keyframes wobble {
+  from {
+    transform: translateY(-3px) rotate(-2deg);
+  }
+  to {
+    transform: translateY(3px) rotate(2deg);
+  }
+}
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-glow span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+.hero-glow span:first-child {
+  width: 900px;
+  height: 900px;
+  right: -260px;
+  top: -320px;
+  background: radial-gradient(circle, rgba(0, 194, 203, 0.2), transparent 65%);
+  animation: glow-a 38s ease-in-out infinite alternate;
+}
+.hero-glow span:last-child {
+  width: 760px;
+  height: 760px;
+  left: -280px;
+  bottom: -380px;
+  background: radial-gradient(circle, rgba(0, 104, 112, 0.35), transparent 65%);
+  animation: glow-b 46s ease-in-out infinite alternate;
+}
+@keyframes glow-a {
+  to {
+    transform: translate(-320px, 220px) scale(1.15);
+  }
+}
+@keyframes glow-b {
+  to {
+    transform: translate(380px, -160px) scale(0.9);
+  }
+}

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import WorkCard from '../components/cards/WorkCard.astro';
+import FilterBar from '../components/FilterBar.astro';
+import PageHero from '../components/PageHero.astro';
+import StatList from '../components/StatList.astro';
+import { byOrder, filterLabels, projectFilters } from '../data/projects';
+import { stats } from '../data/stats';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(byOrder);
+const featured = projects.find(({ data }) => data.featured);
+const rest = projects.filter((project) => project !== featured);
+const filterOptions = projectFilters.map((value) => ({ value, label: filterLabels[value] }));
+---
+
+<BaseLayout
+  title="Munkáink · Weart, egyedi WordPress weboldalak és webshopok"
+  description="Válogatás a Weart projektjeiből: egyedi WordPress weboldalak, WooCommerce webshopok és újratervezések kis- és középvállalkozásoknak."
+  nav="work"
+  og={{
+    title: 'Munkáink · Weart, WordPress fejlesztés',
+    description: 'Egyedi weboldalak és webshopok, sablonok nélkül. Nézd meg, kiknek segítettünk már.',
+  }}
+>
+  <PageHero>
+    <p class="eyebrow eyebrow-dark reveal">munkáink</p>
+    <h1 id="page-title" class="reveal">
+      Weboldalak, amik ma is <span class="hl">ügyfeleket hoznak</span>.
+    </h1>
+    <p class="lead reveal">
+      Válogatás az elmúlt évek projektjeiből: bemutatkozó oldalak, webshopok és újratervezések kis- és
+      középvállalkozásoknak. Mindegyik egyedi fejlesztés, sablon nélkül.
+    </p>
+    <StatList class="page-stats" items={[stats.delivered, stats.clients, stats.years]} />
+  </PageHero>
+
+  <section
+    class="section section-light section-tint work-section work-page"
+    id="projektek"
+    aria-labelledby="projektek-title"
+  >
+    <div class="container">
+      <h2 id="projektek-title" class="sr-only">
+        Projektek
+      </h2>
+      <FilterBar label="Projektek szűrése típus szerint" noun="projekt" options={filterOptions} />
+      {featured && <WorkCard project={featured} feature />}
+      <div class="work-grid work-grid--all">
+        {rest.map((project) => (
+          <WorkCard project={project} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

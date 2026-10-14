@@ -1,0 +1,82 @@
+---
+/** Home hero backdrop: stars (filled on the client), ringed planet, moon and a rocket on a slow loop. */
+---
+
+<svg class="space" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="planet-fill" cx="35%" cy="30%" r="75%">
+      <stop offset="0" stop-color="#2B7C93" />
+      <stop offset=".55" stop-color="#124257" />
+      <stop offset="1" stop-color="#071F30" />
+    </radialGradient>
+    <linearGradient id="trail-fill" x1="0" x2="1">
+      <stop offset="0" stop-color="#3B8FD9" stop-opacity="0" />
+      <stop offset=".7" stop-color="#3B8FD9" stop-opacity=".75" />
+      <stop offset="1" stop-color="#7FC8F0" />
+    </linearGradient>
+    <clipPath id="planet-clip">
+      <circle cx="1290" cy="930" r="250" />
+    </clipPath>
+    <path id="rocket-route" d="M-160 900 C 300 870 640 820 730 590 S 790 170 1030 120 S 1420 150 1640 -80" />
+    <path id="moon-route" d="M1290 930 m-380 0 a380 110 -12 1 0 760 0 a380 110 -12 1 0 -760 0" />
+  </defs>
+
+  <g class="stars"></g>
+  <g class="shooting">
+    <path d="M0 0 L-140 -46" />
+  </g>
+
+  <use href="#rocket-route" class="rocket-route" />
+
+  <g class="planet">
+    <g transform="rotate(18 1290 930)">
+      <path class="planet-ring planet-ring--back" d="M890 930 a400 96 0 0 1 800 0" />
+    </g>
+    <circle cx="1290" cy="930" r="250" fill="url(#planet-fill)" />
+    <g clip-path="url(#planet-clip)">
+      <g class="planet-bands">
+        <path d="M940 790 q175 -40 350 0 t350 0 t350 0 t350 0" />
+        <path d="M940 860 q175 30 350 0 t350 0 t350 0 t350 0" />
+        <path d="M940 940 q175 -24 350 0 t350 0 t350 0 t350 0" />
+      </g>
+      <circle class="crater" cx="1210" cy="760" r="22" />
+      <circle class="crater" cx="1360" cy="820" r="12" />
+      <circle class="crater" cx="1150" cy="850" r="9" />
+    </g>
+    <g transform="rotate(18 1290 930)">
+      <path class="planet-ring" d="M1690 930 a400 96 0 0 1 -800 0" />
+    </g>
+    <g class="moon">
+      <circle r="16" />
+      <circle class="moon-crater" cx="-5" cy="-4" r="4" />
+      <animateMotion dur="60s" repeatCount="indefinite">
+        <mpath href="#moon-route" />
+      </animateMotion>
+    </g>
+  </g>
+
+  <g class="rocket">
+    <g class="rocket-body">
+      <path class="rocket-trail" d="M-16 -9 C-34 -12 -56 -7 -80 6 C-56 4 -34 6 -16 9 Z" />
+      <path class="rocket-trail rocket-trail--soft" d="M-16 -4 C-38 -4 -60 4 -74 14 C-58 8 -38 5 -16 5 Z" />
+      <path class="rocket-flame" d="M-14 -7 C-30 -6 -42 0 -30 0 C-42 0 -30 6 -14 7 Z" />
+      <path class="rocket-fin" d="M-8 -12 L-24 -28 C-26 -20 -24 -14 -16 -10 Z" />
+      <path class="rocket-fin" d="M-8 12 L-24 28 C-26 20 -24 14 -16 10 Z" />
+      <path class="rocket-hull" d="M42 0 C32 -15 12 -19 -14 -13 L-14 13 C12 19 32 15 42 0 Z" />
+      <path class="rocket-nose" d="M42 0 C37 -8 31 -12 26 -13 L26 13 C31 12 37 8 42 0 Z" />
+      <circle class="rocket-window" cx="9" cy="0" r="6.5" />
+      <circle class="rocket-glint" cx="7" cy="-2" r="2" />
+    </g>
+    <animateMotion
+      dur="34s"
+      repeatCount="indefinite"
+      rotate="auto"
+      keyPoints="0;1;1"
+      keyTimes="0;.62;1"
+      calcMode="spline"
+      keySplines=".45 0 .55 1;0 0 1 1"
+    >
+      <mpath href="#rocket-route" />
+    </animateMotion>
+  </g>
+</svg>

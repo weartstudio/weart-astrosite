@@ -1,0 +1,42 @@
+/* ---------- placeholders ---------- */
+.placeholder {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  text-align: center;
+  font: 500 12px/1.5 var(--font-mono);
+  color: var(--muted);
+  background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(0, 104, 112, 0.06) 10px 11px), #eaf4f5;
+  border: 1px dashed #b5cbcf;
+}
+.placeholder svg {
+  width: 56px;
+  fill: none;
+  stroke: #9fb8bc;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.section-dark .placeholder {
+  color: var(--footer-text);
+  border-color: var(--line-on-dark);
+  background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(0, 194, 203, 0.06) 10px 11px), var(--trench);
+}
+.section-dark .placeholder svg {
+  stroke: var(--line-on-dark);
+}
+.placeholder small {
+  opacity: 0.8;
+}
+.placeholder--portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--r-lg);
+}
+.placeholder--avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-full);
+  flex: none;
+  font-size: 10px;
+}

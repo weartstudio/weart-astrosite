@@ -1,0 +1,99 @@
+---
+import { testimonials } from '../../data/testimonials';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+import SparksDoodle from '../icons/SparksDoodle.astro';
+
+const total = testimonials.length;
+---
+
+<section class="section section-light" id="velemenyek" aria-label="Ügyfélvélemények">
+  <div class="container">
+    <div class="quote-wrap">
+      <SparksDoodle class="doodle--quote" />
+      <div class="quote-slider reveal" role="region" aria-roledescription="csúszka" aria-label="Ügyfélvélemények">
+        {/* eslint-disable-next-line astro/jsx-a11y/no-noninteractive-tabindex -- scrollable region must be keyboard focusable */}
+        <div class="slider-track" tabindex="0">
+          {testimonials.map(({ quote, name, initials, role }, i) => (
+            <figure class="quote" role="group" aria-roledescription="vélemény" aria-label={`${i + 1} / ${total}`}>
+              <svg class="tq-mark" viewBox="0 0 120 90" aria-hidden="true">
+                <path d="M14 84c-6-20 0-46 26-64l8 9c-12 10-16 20-14 30 12 0 20 8 20 18 0 10-9 17-19 17-9 0-17-4-21-10z" />
+                <path d="M66 84c-6-20 0-46 26-64l8 9c-12 10-16 20-14 30 12 0 20 8 20 18 0 10-9 17-19 17-9 0-17-4-21-10z" />
+              </svg>
+              <blockquote>„{quote}”</blockquote>
+              <figcaption>
+                <span class="initials" aria-hidden="true">
+                  {initials}
+                </span>
+                <span>
+                  <strong>{name}</strong>
+                  {role}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div class="qs-nav">
+          <button class="qs-btn qs-prev" type="button" aria-label="Előző vélemény">
+            <ArrowIcon direction="left" />
+          </button>
+          <div class="qs-dots">
+            {testimonials.map((_, i) => (
+              <button class="qs-dot" type="button" aria-label={`${i + 1}. vélemény`} />
+            ))}
+          </div>
+          <button class="qs-btn qs-next" type="button" aria-label="Következő vélemény">
+            <ArrowIcon />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    import { $, $$, prefersReducedMotion, rafThrottle } from '../../scripts/dom';
+
+    // manual slider: one quote at a time, no autoplay
+    const root = $('.quote-slider');
+    const track = root && $('.slider-track', root);
+    const prev = root && $<HTMLButtonElement>('.qs-prev', root);
+    const next = root && $<HTMLButtonElement>('.qs-next', root);
+
+    if (root && track && prev && next) {
+      const slides = $$('.quote', track);
+      const dots = $$('.qs-dot', root);
+      const current = () => Math.round(track.scrollLeft / track.clientWidth);
+      const goTo = (i: number) => {
+        const slide = slides[Math.max(0, Math.min(slides.length - 1, i))];
+        if (slide) track.scrollTo({ left: slide.offsetLeft, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      };
+      const sync = () => {
+        const i = current();
+        dots.forEach((dot, k) => dot.setAttribute('aria-current', String(k === i)));
+        slides.forEach((slide, k) => slide.setAttribute('aria-hidden', String(k !== i)));
+        prev.disabled = i === 0;
+        next.disabled = i === slides.length - 1;
+        const active = slides[i];
+        if (active) track.style.height = `${active.offsetHeight}px`;
+      };
+
+      track.addEventListener('scroll', rafThrottle(sync), { passive: true });
+      prev.addEventListener('click', () => goTo(current() - 1));
+      next.addEventListener('click', () => goTo(current() + 1));
+      dots.forEach((dot, k) => dot.addEventListener('click', () => goTo(k)));
+      root.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          goTo(current() - 1);
+        }
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          goTo(current() + 1);
+        }
+      });
+      window.addEventListener('resize', () => {
+        goTo(current());
+        sync();
+      });
+      sync();
+    }
+  </script>
+</section>

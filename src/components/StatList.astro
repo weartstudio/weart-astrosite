@@ -1,0 +1,21 @@
+---
+import type { Stat } from '../data/stats';
+
+interface Props {
+  class: string;
+  items: Stat[];
+}
+
+const { class: className, items } = Astro.props;
+---
+
+<dl class:list={[className, 'reveal']}>
+  {items.map(({ label, value, count, suffix }) => (
+    <div>
+      <dt>{label}</dt>
+      <dd class="mono" data-count={count} data-suffix={suffix}>
+        {value}
+      </dd>
+    </div>
+  ))}
+</dl>

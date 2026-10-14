@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import PostCard from '../../components/cards/PostCard.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import PageHero from '../../components/PageHero.astro';
+import { byDateDesc, CATEGORY_PARAM, collectCategories } from '../../data/blog';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allPosts = (await getCollection('posts')).sort(byDateDesc);
+const [latest, ...posts] = allPosts;
+const filterOptions = collectCategories(allPosts).map(({ slug, name }) => ({ value: slug, label: name }));
+---
+
+<BaseLayout
+  title="Blog · Weart, tippek weboldalról, webshopról és WordPressről"
+  description="Gyakorlati cikkek vállalkozóknak weboldal- és webshopkészítésről, és mélyebb fejlesztői írások WordPress és WooCommerce témában."
+  nav="blog"
+  og={{
+    title: 'Blog · Weart, WordPress fejlesztés',
+    description: 'Amit a weboldalakról tudni érdemes: cikkek vállalkozóknak és fejlesztőknek.',
+  }}
+>
+  <PageHero>
+    <p class="eyebrow eyebrow-dark reveal">blog</p>
+    <h1 id="page-title" class="reveal">
+      Amit a weboldalakról <span class="hl">tudni érdemes</span>.
+    </h1>
+    <p class="lead reveal">
+      Gyakorlati cikkek vállalkozóknak a weboldal- és webshopkészítésről, és néhány mélyebb írás fejlesztőknek WordPress
+      és WooCommerce témában.
+    </p>
+  </PageHero>
+
+  <section class="section section-light section-tint work-section blog-list" id="cikkek" aria-labelledby="cikkek-title">
+    <div class="container">
+      <h2 id="cikkek-title" class="sr-only">
+        Legfrissebb cikkek
+      </h2>
+      <FilterBar label="Cikkek szűrése téma szerint" noun="cikk" options={filterOptions} param={CATEGORY_PARAM} />
+      {latest && <PostCard post={latest} feature />}
+      <div class="post-grid">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

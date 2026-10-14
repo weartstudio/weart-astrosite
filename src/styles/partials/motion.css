@@ -1,0 +1,146 @@
+/* ---------- reveal ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: var(--rd, 0ms);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash-in {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes grow-x {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bob {
+  50% {
+    translate: 0 -10px;
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes gauge {
+  to {
+    stroke-dashoffset: 14;
+  }
+}
+@keyframes needle {
+  to {
+    transform: rotate(72deg);
+  }
+}
+@keyframes whoosh {
+  0% {
+    transform: translateX(6px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-6px);
+    opacity: 0;
+  }
+}
+@keyframes type-line {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  25%,
+  80% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 40;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes pulse {
+  0% {
+    box-shadow:
+      0 0 0 8px var(--surface),
+      0 0 0 8px rgba(0, 194, 203, 0.5);
+  }
+  100% {
+    box-shadow:
+      0 0 0 8px var(--surface),
+      0 0 0 24px rgba(0, 194, 203, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .benefit-art *,
+  .is-visible .benefit-art * {
+    animation: none !important;
+  }
+  .art-launch .launch {
+    opacity: 1;
+  }
+  .art-float .doc-line,
+  .art-sat .ok {
+    stroke-dashoffset: 0;
+  }
+  .art-sat .panel,
+  .art-climb .pl {
+    transform: none;
+  }
+  .orbit,
+  .float-card,
+  .hero-glow span,
+  .stars *,
+  .shooting,
+  .planet-bands,
+  .rocket-flame,
+  .rocket-body,
+  .rocket-trail {
+    animation: none;
+  }
+  .work-stack {
+    transform: none !important;
+  }
+}

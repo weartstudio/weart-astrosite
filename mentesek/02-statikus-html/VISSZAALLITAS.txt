@@ -1,0 +1,3 @@
+Mentés: 2026-10-14, az Astro átállás előtti statikus HTML változat.
+
+Megnyitás: nyisd meg az index.html-t böngészőben, vagy futtass egy statikus szervert ebben a mappában.

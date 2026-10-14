@@ -1,0 +1,6 @@
+Mentés: 2026-10-12 – az űrdizájnos hero elkészülte után, mielőtt a téma végigment volna az oldalon.
+
+Visszaállítás (a projekt gyökerében):
+  cp mentesek/01-space-hero/index.html .
+  cp -R mentesek/01-space-hero/css mentesek/01-space-hero/js .
+Az images/ mappát a mentés nem érinti.

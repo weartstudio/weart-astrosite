@@ -1,0 +1,155 @@
+/* ---------- testimonials: one quote at a time, manual slider ---------- */
+.quote-slider {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.slider-track {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  align-items: flex-start;
+  transition: height 350ms var(--ease-out);
+}
+.slider-track::-webkit-scrollbar {
+  display: none;
+}
+.slider-track:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 6px;
+  border-radius: var(--r-md);
+}
+.quote {
+  position: relative;
+  flex: 0 0 100%;
+  margin: 0;
+  padding: 48px 8px 0 72px;
+  scroll-snap-align: center;
+}
+.tq-mark {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 132px;
+  overflow: visible;
+  pointer-events: none;
+}
+.tq-mark path {
+  fill: rgba(0, 194, 203, 0.2);
+  stroke: none;
+}
+.quote blockquote {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 28px;
+  font-size: clamp(19px, 2vw, 24px);
+  line-height: 1.55;
+  color: var(--on-surface);
+}
+.quote figcaption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.quote figcaption strong {
+  display: block;
+  color: var(--on-surface);
+  font-size: 16px;
+}
+.initials {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: var(--r-full);
+  display: grid;
+  place-items: center;
+  font: 500 13px var(--font-mono);
+  background: var(--secondary);
+  color: var(--abyss);
+}
+
+.qs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+.qs-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  color: var(--on-surface);
+  transition:
+    border-color var(--fast) ease,
+    color var(--fast) ease,
+    opacity var(--fast) ease;
+}
+.qs-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.qs-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--tertiary);
+}
+.qs-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.qs-dots {
+  display: flex;
+  gap: 8px;
+}
+.qs-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: var(--border);
+  cursor: pointer;
+  transition:
+    width 300ms var(--ease-out),
+    background-color 300ms ease;
+}
+.qs-dot[aria-current='true'] {
+  width: 28px;
+  background: var(--primary);
+}
+
+@media (max-width: 767px) {
+  .quote {
+    padding: 40px 4px 0 28px;
+  }
+  .tq-mark {
+    width: 96px;
+  }
+  .qs-nav {
+    margin-top: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slider-track {
+    scroll-behavior: auto;
+  }
+}

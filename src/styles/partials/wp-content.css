@@ -1,0 +1,110 @@
+/* ---------- WordPress post content (block editor markup inside .prose) ---------- */
+.post-cover img,
+.article-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.article-cover {
+  overflow: hidden;
+}
+
+.prose h4 {
+  font-size: 17px;
+  margin: 28px 0 8px;
+}
+.prose ol {
+  padding-left: 22px;
+  margin: 0 0 var(--s-md);
+}
+.prose h2 strong,
+.prose h3 strong {
+  font-weight: inherit;
+}
+
+.prose .wp-block-image {
+  margin: 32px 0;
+}
+.prose .wp-block-image img {
+  height: auto;
+  border-radius: var(--r-lg);
+}
+.prose .wp-block-image.alignright {
+  float: right;
+  max-width: 45%;
+  margin: 4px 0 16px 24px;
+}
+.prose .wp-block-image figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.prose blockquote {
+  margin: 28px 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--primary);
+  color: var(--on-surface);
+  font-size: 18px;
+}
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+.prose cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-style: normal;
+  color: var(--muted);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  /* show code exactly as typed: no "=>" → arrow ligatures */
+  font-variant-ligatures: none;
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: var(--r-sm);
+  background: rgba(5, 26, 45, 0.06);
+}
+.prose pre {
+  margin: 28px 0;
+  padding: 20px 22px;
+  overflow-x: auto;
+  border-radius: var(--r-lg);
+  background: var(--abyss);
+  color: var(--on-dark);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.prose iframe {
+  max-width: 100%;
+  border: 0;
+}
+
+.prose .wp-block-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 28px 0;
+}
+.prose .wp-block-button__link {
+  display: inline-flex;
+  padding: 12px 22px;
+  border-radius: var(--r-md);
+  background: var(--primary);
+  color: var(--abyss);
+  font-weight: 700;
+  text-decoration: none;
+}
+.prose .wp-block-spacer {
+  height: 24px !important;
+}

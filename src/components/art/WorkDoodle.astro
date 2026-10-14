@@ -1,0 +1,49 @@
+---
+/** Ringed planet with a moon and a tiny rocket circling it, next to the work section title. */
+---
+
+<svg class="doodle doodle--work" viewBox="0 0 300 190" aria-hidden="true">
+  <!-- big ringed planet, a moon and a tiny logo-style rocket circling it -->
+  <g transform="rotate(-14 150 96)">
+    <ellipse class="dl-orbit" cx="150" cy="96" rx="134" ry="40" />
+  </g>
+  <g class="wk-planet">
+    <g transform="rotate(-18 150 96)">
+      <path class="dl-line dl-ring" d="M76 96a74 17 0 0 1 148 0" />
+    </g>
+    <circle class="dl-fill" cx="150" cy="96" r="46" />
+    <path class="dl-band" d="M112 80q38-12 76 0M106 100q44 12 88 0M116 118q34 8 68 0" />
+    <circle class="dl-crater" cx="134" cy="74" r="6" />
+    <circle class="dl-crater" cx="170" cy="108" r="4" />
+    <g transform="rotate(-18 150 96)">
+      <path class="dl-line dl-ring" d="M224 96a74 17 0 0 1 -148 0" />
+    </g>
+  </g>
+  <g class="wk-moon">
+    <circle class="dl-paper" r="10" />
+    <circle class="dl-crater" cx="-3" cy="-2" r="2.6" />
+    <animateMotion dur="16s" repeatCount="indefinite" path="M284 96 A134 40 -14 1 1 16 96 A134 40 -14 1 1 284 96" />
+  </g>
+  <g class="wk-rocket">
+    <g transform="scale(.9)">
+      <path class="r-trail" d="M-14 -6 C-24 -8 -34 -4 -42 3 C-34 2 -24 4 -14 6 Z" />
+      <path class="r-flame" d="M-12 -5 C-22 -4 -28 0 -20 0 C-28 0 -22 4 -12 5 Z" />
+      <path class="r-fin" d="M-6 -9 L-17 -20 C-19 -14 -17 -10 -12 -7 Z" />
+      <path class="r-fin" d="M-6 9 L-17 20 C-19 14 -17 10 -12 7 Z" />
+      <path class="r-hull" d="M30 0 C23 -11 9 -14 -12 -10 L-12 10 C9 14 23 11 30 0 Z" />
+      <path class="r-nose" d="M30 0 C26 -6 22 -8 18 -9 L18 9 C22 8 26 6 30 0 Z" />
+      <circle class="r-window" cx="5" cy="0" r="4.6" />
+    </g>
+    <animateMotion
+      dur="11s"
+      repeatCount="indefinite"
+      rotate="auto"
+      path="M150 8 C 240 8 292 40 292 70 C 292 120 220 170 150 170 C 60 170 8 130 8 90 C 8 40 70 8 150 8 Z"
+    />
+  </g>
+  <path class="dl-spark" d="M36 15q1.6 9.3 11 11q-9.3 1.6 -11 11q-1.6 -9.3 -11 -11q9.3 -1.6 11 -11z" />
+  <path class="dl-spark dl-spark--2" d="M268 141q1.3 7.6 9 9q-7.6 1.3 -9 9q-1.3 -7.6 -9 -9q7.6 -1.3 9 -9z" />
+  <path class="dl-spark" d="M250 16q0.9 5.1 6 6q-5.1 0.9 -6 6q-0.9 -5.1 -6 -6q5.1 -0.9 6 -6z" />
+  <circle class="dl-dot" cx="60" cy="160" r="3" />
+  <circle class="dl-dot" cx="232" cy="52" r="2.2" />
+</svg>

@@ -1,0 +1,35 @@
+---
+const clients = [
+  'Hymato.hu',
+  'Szerszámot.eu',
+  'Szuri-Káta Állatorvosi Rendelő',
+  'Amberg Audio',
+  'Palantax',
+  'Üveg Trend Plusz Kft.',
+  'Szentgáli Csaba, operatőr',
+];
+---
+
+<section class="marquee-band" aria-label="Ügyfeleink">
+  <p class="mono marquee-label">Akik már megbíztak bennünk</p>
+  <div class="marquee">
+    <ul class="marquee-track">
+      {clients.map((client) => (
+        <li>{client}</li>
+      ))}
+    </ul>
+  </div>
+  <script>
+    import { $, $$, prefersReducedMotion } from '../../scripts/dom';
+
+    // duplicate the items for a seamless loop; the copies are hidden from assistive tech
+    const track = $('.marquee-track');
+    if (track && !prefersReducedMotion()) {
+      for (const item of $$('li', track)) {
+        const clone = item.cloneNode(true) as HTMLElement;
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      }
+    }
+  </script>
+</section>

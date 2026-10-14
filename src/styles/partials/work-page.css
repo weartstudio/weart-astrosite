@@ -1,0 +1,145 @@
+/* ---------- munkáink aloldal: kompakt hero + szűrő + teljes projektrács ---------- */
+.hero--page {
+  min-height: 0;
+  padding: 160px 0 var(--s-xl);
+}
+@media (min-width: 992px) {
+  .hero--page {
+    padding: 184px 0 var(--s-section);
+  }
+}
+.page-hero {
+  position: relative;
+  z-index: 1;
+}
+.page-hero > * {
+  max-width: 760px;
+}
+.page-hero h1 {
+  text-wrap: balance;
+}
+.space--page .planet-ring {
+  stroke-width: 7;
+}
+.space--page .moon-dot {
+  fill: #c0ebf1;
+  opacity: 0.8;
+}
+@media (max-width: 767px) {
+  .space--page .planet {
+    opacity: 0.5;
+  }
+}
+.page-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  margin: 40px 0 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--line-on-dark);
+  max-width: 560px;
+}
+.page-stats div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.page-stats dd {
+  margin: 0;
+  font-size: clamp(30px, 3.4vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--raised);
+  font-variant-numeric: tabular-nums;
+}
+.page-stats dt {
+  font-size: 14px;
+  color: var(--on-dark);
+  margin-top: 8px;
+}
+
+.work-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 48px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 15px/1.2 var(--font-sans);
+  color: var(--on-surface);
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 16px;
+  cursor: pointer;
+  transition:
+    background-color var(--fast) ease,
+    border-color var(--fast) ease,
+    color var(--fast) ease;
+}
+.chip:hover {
+  border-color: var(--tertiary);
+}
+.chip[aria-pressed='true'] {
+  background: var(--abyss);
+  border-color: var(--abyss);
+  color: var(--raised);
+}
+.chip-count {
+  font: 500 12px/1 var(--font-mono);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.chip[aria-pressed='true'] .chip-count {
+  color: var(--primary);
+}
+
+.work-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin: 12px 0 0;
+  padding: 0;
+  font: 500 12px/1.4 var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.work-tags li + li::before {
+  content: '·';
+  margin: 0 8px;
+}
+.work--feature .work-tags {
+  margin-top: 16px;
+}
+[data-tags][hidden] {
+  display: none !important;
+}
+
+/* a teljes rács: 2 oszlop tableten, 3 desktopon; mobilon egymás alatt (nem lapozós, mint a főoldalon) */
+.work-page .work-grid--all {
+  gap: 56px 32px;
+  margin-bottom: 0;
+}
+@media (min-width: 768px) {
+  .work-page .work-grid--all {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .work-page .work-grid--all {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .work-page .work-grid--all {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    gap: 48px;
+  }
+}

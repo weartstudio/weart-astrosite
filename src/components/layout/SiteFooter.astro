@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo-dark.png';
+import { site } from '../../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a class="footer-logo" href="#top">
+      <Image src={logo} alt="Weart, vissza az oldal tetejére" widths={[123, 246]} sizes="123px" />
+    </a>
+    <p>
+      Személyre szabott weboldalak, webáruházak és egyedi webalkalmazások 10+ év tapasztalattal és 90+ elégedett
+      ügyféllel.
+    </p>
+    <nav aria-label="Lábléc">
+      <a href={site.socials.facebook}>Facebook</a>
+      <a href={site.socials.github}>GitHub</a>
+      <a href="/posts/">Blog</a>
+      <a href={site.legalUrl}>Jogi dolgok</a>
+    </nav>
+    <p class="copyright">
+      © {site.foundedYear}–{year} Weart · Egyed Balázs
+    </p>
+  </div>
+</footer>

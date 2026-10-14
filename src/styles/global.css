@@ -1,0 +1,33 @@
+/*
+ * Global stylesheet. The partials are plain global CSS, not scoped component styles,
+ * because many rules target markup created at runtime (starfield, team connectors,
+ * form errors) and classes shared across sections. Import order is the cascade order.
+ */
+@import '@fontsource/plus-jakarta-sans/latin-ext-400.css';
+@import '@fontsource/plus-jakarta-sans/latin-ext-700.css';
+@import '@fontsource/plus-jakarta-sans/latin-400.css';
+@import '@fontsource/plus-jakarta-sans/latin-700.css';
+@import '@fontsource/jetbrains-mono/latin-ext-500.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+
+@import './partials/tokens.css';
+@import './partials/base.css';
+@import './partials/hero.css';
+@import './partials/placeholder.css';
+@import './partials/marquee.css';
+@import './partials/benefits.css';
+@import './partials/space-theme.css';
+@import './partials/services.css';
+@import './partials/work.css';
+@import './partials/about.css';
+@import './partials/testimonials.css';
+@import './partials/faq.css';
+@import './partials/contact.css';
+@import './partials/footer.css';
+@import './partials/motion.css';
+@import './partials/mobile.css';
+@import './partials/canvas.css';
+@import './partials/work-page.css';
+@import './partials/blog.css';
+@import './partials/article.css';
+@import './partials/wp-content.css';

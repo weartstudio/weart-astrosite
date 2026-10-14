@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { formatDate, postHref, primaryCategory, type Post } from '../../data/blog';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+
+interface Props {
+  post: Post;
+  feature?: boolean;
+  /** Related-posts variant: no excerpt, no reveal animation, no filter data. */
+  compact?: boolean;
+}
+
+const { post, feature = false, compact = false } = Astro.props;
+const { title, excerpt, date, readingMinutes, categories, featuredImage } = post.data;
+const published = formatDate(date);
+const categoryName = primaryCategory(post)?.name;
+const eyebrow = feature ? ['Legfrissebb', categoryName].filter(Boolean).join(' · ') : categoryName;
+---
+
+<a
+  class:list={['post-card', { 'post-card--feature': feature, reveal: !compact }]}
+  href={postHref(post)}
+  data-tags={compact ? undefined : categories.map(({ slug }) => slug).join(' ')}
+>
+  {featuredImage ? (
+    <div class="post-cover">
+      <Image
+        src={featuredImage.src}
+        alt={featuredImage.alt}
+        width={featuredImage.width}
+        height={featuredImage.height}
+        widths={feature ? [640, 960, 1280] : [400, 640, 800]}
+        sizes={
+          feature ? '(min-width: 992px) 640px, 100vw' : '(min-width: 1100px) 400px, (min-width: 768px) 50vw, 100vw'
+        }
+      />
+    </div>
+  ) : (
+    <div class="post-cover placeholder">
+      <span>Borítókép helye</span>
+    </div>
+  )}
+  <div class="post-body">
+    {eyebrow && <p class="eyebrow eyebrow-light">{eyebrow}</p>}
+    <h3>{title}</h3>
+    {!compact && excerpt && <p class="post-excerpt">{excerpt}</p>}
+    <p class="post-meta mono">
+      <time datetime={published.iso}>{published.label}</time> · {readingMinutes} perc{feature && ' olvasás'}
+    </p>
+    {feature && (
+      <span class="link-arrow">
+        Elolvasom <ArrowIcon />
+      </span>
+    )}
+  </div>
+</a>

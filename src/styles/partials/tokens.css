@@ -1,0 +1,42 @@
+/* Weart Night Tide: tokens from DESIGN.md */
+:root {
+  --primary: #00c2cb;
+  --secondary: #aedfdc;
+  --tertiary: #006870;
+  --abyss: #051a2d;
+  --trench: #050f19;
+  --on-dark: #c0ebf1;
+  --surface: #f3f9fa;
+  --raised: #fcfeff;
+  --on-surface: #051a2d;
+  --muted: #465864;
+  --footer-text: #76868d;
+  --border: #d3e1e3;
+  --line-on-dark: #233544;
+  --error: #b63b32;
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --r-full: 9999px;
+
+  --s-xs: 4px;
+  --s-sm: 8px;
+  --s-md: 16px;
+  --s-lg: 32px;
+  --s-xl: 64px;
+  --s-section: 96px;
+  --measure: 600px;
+  --container: 1240px;
+
+  --shadow-frame: 0 16px 36px -20px rgba(5, 26, 45, 0.22);
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --fast: 150ms;
+  --slow: 500ms;
+
+  --art-ink: #051a2d;
+  --sparkle: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}

@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+import SpaceDefs from '../components/icons/SpaceDefs.astro';
+import ContactSection from '../components/layout/ContactSection.astro';
+import MobileCta from '../components/layout/MobileCta.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import { site, type NavKey } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  nav: NavKey;
+  og?: {
+    type?: 'website' | 'article';
+    title?: string;
+    description?: string;
+  };
+  /** schema.org JSON-LD object for this page. */
+  jsonLd?: Record<string, unknown>;
+  readProgress?: boolean;
+}
+
+const { title, description, nav, og = {}, jsonLd, readProgress } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+---
+
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={og.type ?? 'website'} />
+    <meta property="og:title" content={og.title ?? title} />
+    <meta property="og:description" content={og.description ?? description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="hu_HU" />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Ugrás a tartalomra
+    </a>
+    <SpaceDefs />
+    <SiteHeader current={nav} readProgress={readProgress} />
+    <main id="main">
+      <slot />
+      <ContactSection />
+    </main>
+    <SiteFooter />
+    <MobileCta />
+    <script>
+      import '../scripts/reveal';
+    </script>
+  </body>
+</html>

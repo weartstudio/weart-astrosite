@@ -1,0 +1,307 @@
+/* ---------- cards / benefits ---------- */
+.benefit-grid {
+  display: grid;
+  gap: 40px 32px;
+}
+@media (min-width: 640px) {
+  .benefit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .benefit-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.benefit {
+  padding: 0;
+}
+.benefit h3 {
+  font-size: 19px;
+}
+.benefit p {
+  color: var(--muted);
+  margin: 0;
+  font-size: 15px;
+}
+.benefit-art {
+  width: 120px;
+  height: 80px;
+  margin-bottom: 20px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* space-themed benefit art, same ink style as the service illustrations */
+.benefit-art .r-hull,
+.service-art .r-hull {
+  fill: var(--raised);
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.benefit-art .r-nose,
+.service-art .r-nose {
+  fill: #7fc8f0;
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.benefit-art .r-fin,
+.service-art .r-fin {
+  fill: #3b8fd9;
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.benefit-art .r-window,
+.service-art .r-window {
+  fill: #9ed6f5;
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.benefit-art .r-trail,
+.service-art .r-trail {
+  fill: #3b8fd9;
+  opacity: 0.55;
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: plume 0.22s ease-in-out infinite alternate;
+}
+.benefit-art .r-flame,
+.service-art .r-flame {
+  fill: #c0ebf1;
+  stroke: none;
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: flame 0.18s ease-in-out infinite alternate;
+}
+
+/* 1 – faster: rocket shoots past a small planet */
+.art-launch .p-small {
+  fill: var(--secondary);
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.art-launch .p-ring {
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.art-launch .speed path {
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+.art-launch .launch {
+  opacity: 0;
+}
+.is-visible .art-launch .launch {
+  animation:
+    blast 1.1s var(--ease-out) 0.2s forwards,
+    hover-jit 1.6s ease-in-out 1.3s infinite alternate;
+}
+.is-visible .art-launch .speed {
+  animation: whoosh 1.2s ease-in-out infinite;
+}
+@keyframes blast {
+  from {
+    opacity: 0;
+    transform: translate(-40px, 26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hover-jit {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* 2 – simple: a document floating in zero-g, a moon orbiting it, lines typing themselves */
+.art-float .orbit-back {
+  stroke: var(--border);
+  stroke-width: 2;
+  stroke-dasharray: 3 5;
+}
+.art-float .doc rect {
+  stroke: var(--abyss);
+  stroke-width: 2.4;
+  fill: var(--raised);
+}
+.art-float .doc {
+  animation: zero-g 4s ease-in-out infinite alternate;
+}
+@keyframes zero-g {
+  from {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  to {
+    transform: translateY(3px) rotate(3deg);
+  }
+}
+.art-float .doc-line {
+  stroke: var(--secondary);
+  stroke-width: 4;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+.is-visible .art-float .doc-line {
+  animation: type-line 5s ease-in-out infinite;
+}
+.is-visible .art-float .l2 {
+  animation-delay: 0.5s;
+}
+.is-visible .art-float .l3 {
+  animation-delay: 1s;
+}
+.is-visible .art-float .l4 {
+  animation-delay: 1.5s;
+}
+.art-float .moonlet circle {
+  fill: var(--primary);
+  stroke: var(--abyss);
+  stroke-width: 2;
+}
+.art-float .moonlet .mc {
+  fill: var(--abyss);
+  stroke: none;
+  opacity: 0.35;
+}
+.art-float .spark-s {
+  fill: var(--secondary);
+  stroke: var(--abyss);
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dl-twinkle 2.6s ease-in-out infinite alternate;
+}
+
+/* 3 – few plugins: one solid little satellite, panels unfold, steady orbit */
+.art-sat rect,
+.art-sat .core-win,
+.art-sat .dish {
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.art-sat .panel rect {
+  fill: var(--secondary);
+}
+.art-sat .panel path {
+  stroke: var(--abyss);
+  stroke-width: 1.2;
+  opacity: 0.55;
+}
+.art-sat .core {
+  fill: var(--raised);
+}
+.art-sat .core-win {
+  fill: var(--primary);
+}
+.art-sat .dish {
+  fill: var(--raised);
+}
+.art-sat .arm,
+.art-sat .ant {
+  stroke: var(--abyss);
+  stroke-width: 2.4;
+}
+.art-sat .ant-tip {
+  fill: var(--primary);
+  stroke: var(--abyss);
+  stroke-width: 1.6;
+}
+.art-sat .ok {
+  stroke: var(--tertiary);
+  stroke-width: 3.2;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+}
+.art-sat .panel {
+  transform-box: fill-box;
+  transform: scaleX(0);
+}
+.art-sat .panel-l {
+  transform-origin: right center;
+}
+.art-sat .panel-r {
+  transform-origin: left center;
+}
+.art-sat .sat {
+  transform-box: view-box;
+  transform-origin: 60px 39px;
+}
+.is-visible .art-sat .panel {
+  animation: unfold 0.7s var(--ease-out) 0.3s forwards;
+}
+.is-visible .art-sat .panel-r {
+  animation-delay: 0.45s;
+}
+.is-visible .art-sat .sat {
+  animation: sat-drift 6s ease-in-out 1.2s infinite alternate;
+}
+.is-visible .art-sat .ok {
+  animation: dash-in 0.6s var(--ease-out) 1.1s forwards;
+}
+.is-visible .art-sat .ant-tip {
+  animation: blink-soft 1.6s ease-in-out infinite;
+}
+@keyframes unfold {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes sat-drift {
+  from {
+    transform: translateY(-2px) rotate(-4deg);
+  }
+  to {
+    transform: translateY(2px) rotate(4deg);
+  }
+}
+
+/* 4 – grows with you: ever bigger planets on a rising route, a tiny rocket climbing it */
+.art-climb .route {
+  stroke: var(--abyss);
+  stroke-width: 2;
+  stroke-dasharray: 3 5;
+  opacity: 0.5;
+}
+.art-climb .pl circle,
+.art-climb circle.pl {
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.art-climb .pl1 {
+  fill: var(--secondary);
+}
+.art-climb .pl2 {
+  fill: #7fc8f0;
+}
+.art-climb .pl3 circle {
+  fill: var(--primary);
+}
+.art-climb .pl-ring {
+  stroke: var(--abyss);
+  stroke-width: 2.2;
+}
+.art-climb .pl {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+}
+.is-visible .art-climb .pl {
+  animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.is-visible .art-climb .pl2 {
+  animation-delay: 0.25s;
+}
+.is-visible .art-climb .pl3 {
+  animation-delay: 0.5s;
+}
+@keyframes pop {
+  to {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,52 @@
+---
+import BenefitClimbArt from '../art/BenefitClimbArt.astro';
+import BenefitFloatArt from '../art/BenefitFloatArt.astro';
+import BenefitLaunchArt from '../art/BenefitLaunchArt.astro';
+import BenefitSatelliteArt from '../art/BenefitSatelliteArt.astro';
+
+const benefits = [
+  {
+    Art: BenefitLaunchArt,
+    title: 'Gyorsabb, mint a versenytársaid',
+    text: 'A mobiloldal 0,1 másodperces gyorsulása akár 8–10%-kal növelheti a konverziót. Kódból optimalizálunk, nem bővítmények halmozásával.',
+  },
+  {
+    Art: BenefitFloatArt,
+    title: 'Egyszerű, mint egy Word fájl',
+    text: 'Úgy építjük fel az oldalt, hogy fejlesztő nélkül, magad frissíthesd a tartalmat. Kérésre személyre szabott oktatóvideót is készítünk.',
+  },
+  {
+    Art: BenefitSatelliteArt,
+    title: 'Kevés bővítmény, kevesebb hiba',
+    text: 'A pluginokkal teletömött oldal olyan, mint egy kártyavár. Csak iparági sztenderd bővítményt használunk, a többit magunk programozzuk le.',
+  },
+  {
+    Art: BenefitClimbArt,
+    title: 'Veled együtt növekszik',
+    text: 'Szilárd alapot programozunk, ami bővíthető és alkalmazkodik a vállalkozásodhoz, így nem kell pár évente új oldalt csináltatnod.',
+  },
+];
+---
+
+<section class="section section-light" id="miert" aria-labelledby="miert-title">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow eyebrow-light">miért velünk</p>
+      <h2 id="miert-title">Egy vállalkozásnak nem dísz kell, hanem jól működő eszköz</h2>
+      <p>
+        A készen vett sablonok tele vannak felesleges funkcióval, a sok bővítmény pedig lassú, sérülékeny oldalt
+        eredményez. Mi máshogy dolgozunk.
+      </p>
+    </header>
+
+    <div class="benefit-grid">
+      {benefits.map(({ Art, title, text }) => (
+        <article class="benefit reveal">
+          <Art />
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

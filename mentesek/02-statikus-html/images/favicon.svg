@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- the site's logo-style rocket, pointing up-right on an abyss tile -->
+  <rect width="32" height="32" rx="8" fill="#051A2D"/>
+  <circle cx="25" cy="8" r="1" fill="#C0EBF1"/>
+  <circle cx="6" cy="10" r=".8" fill="#C0EBF1" opacity=".6"/>
+  <g transform="translate(16 16) rotate(-45) scale(.44) translate(-1 0)" stroke="#051A2D" stroke-width="3" stroke-linejoin="round">
+    <path d="M-12 -5 C-24 -4 -31 0 -21 0 C-31 0 -24 4 -12 5 Z" fill="#00C2CB" stroke="none"/>
+    <path d="M-6 -9 L-17 -20 C-19 -14 -17 -10 -12 -7 Z" fill="#3B8FD9"/>
+    <path d="M-6 9 L-17 20 C-19 14 -17 10 -12 7 Z" fill="#3B8FD9"/>
+    <path d="M30 0 C23 -11 9 -14 -12 -10 L-12 10 C9 14 23 11 30 0 Z" fill="#FCFEFF"/>
+    <path d="M30 0 C26 -6 22 -8 18 -9 L18 9 C22 8 26 6 30 0 Z" fill="#7FC8F0"/>
+    <circle cx="5" cy="0" r="4.6" fill="#9ED6F5"/>
+  </g>
+</svg>

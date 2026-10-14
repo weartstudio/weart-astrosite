@@ -1,0 +1,17 @@
+---
+import PersonIcon from './icons/PersonIcon.astro';
+
+interface Props {
+  class?: string;
+  /** Rendered as a figcaption; supports `<br>` for line breaks. */
+  caption?: string;
+}
+
+const { class: className, caption } = Astro.props;
+---
+
+<figure class:list={['placeholder', className]} aria-hidden="true">
+  <PersonIcon />
+  {caption && <figcaption set:html={caption} />}
+  <slot />
+</figure>

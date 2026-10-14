@@ -1,0 +1,53 @@
+---
+/** Home hero right column: portrait, orbit rings and floating cards (code, speed gauge, mobile chip). */
+---
+
+<div class="hero-visual" aria-hidden="true">
+  <div class="orbit">
+    <svg viewBox="0 0 400 400">
+      <circle class="orbit-ring" cx="200" cy="200" r="190" />
+      <circle class="orbit-ring orbit-ring--inner" cx="200" cy="200" r="150" />
+      <circle class="orbit-dot" cx="200" cy="10" r="5" />
+    </svg>
+  </div>
+
+  <figure class="placeholder placeholder--portrait hero-photo">
+    <svg viewBox="0 0 48 48">
+      <circle cx="24" cy="17" r="8" />
+      <path d="M8 42c2-9 8-13 16-13s14 4 16 13" />
+    </svg>
+    <figcaption>
+      Kép helye: Egyed Balázs portré
+      <br />
+      <small>álló, 4:5 arány</small>
+    </figcaption>
+  </figure>
+
+  <div class="float-card code-card" data-depth="18">
+    <div class="code-head">
+      <i></i>
+      <i></i>
+      <i></i>
+      <span>functions.php</span>
+    </div>
+    <pre class="code-body"><code id="typed-code"></code><span class="caret"></span></pre>
+  </div>
+
+  <div class="float-card speed-card" data-depth="-14">
+    <svg viewBox="0 0 120 70" class="gauge">
+      <path class="gauge-track" d="M10 62a50 50 0 0 1 100 0" />
+      <path class="gauge-fill" d="M10 62a50 50 0 0 1 100 0" />
+      <line class="gauge-needle" x1="60" y1="62" x2="60" y2="22" />
+      <circle cx="60" cy="62" r="4" />
+    </svg>
+    <span class="mono">Villámgyors betöltés</span>
+  </div>
+
+  <div class="float-card chip-card" data-depth="10">
+    <svg viewBox="0 0 24 24">
+      <rect x="6" y="2" width="12" height="20" rx="2.5" />
+      <path d="M10 18h4" />
+    </svg>
+    <span>Mobilra optimalizálva</span>
+  </div>
+</div>

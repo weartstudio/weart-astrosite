@@ -1,0 +1,65 @@
+---
+/**
+ * Filter chips for a card list. Each chip filters the `[data-tags]` items of the enclosing section;
+ * the counts are filled in on the client. A `?<param>=<value>` query string preselects a chip.
+ */
+interface Props {
+  label: string;
+  /** Noun used in the screen reader status, e.g. "projekt". */
+  noun: string;
+  options: { value: string; label: string }[];
+  /** Query parameter that preselects a filter, e.g. `kategoria`. */
+  param?: string;
+}
+
+const { label, noun, options, param } = Astro.props;
+---
+
+<div class="work-filter reveal" role="group" aria-label={label} data-noun={noun} data-param={param}>
+  <button class="chip" type="button" data-filter="all" aria-pressed="true">
+    Összes <span class="chip-count"></span>
+  </button>
+  {options.map((option) => (
+    <button class="chip" type="button" data-filter={option.value} aria-pressed="false">
+      {option.label} <span class="chip-count" />
+    </button>
+  ))}
+</div>
+<p class="sr-only" id="filter-status" role="status" aria-live="polite"></p>
+
+<script>
+  import { $, $$ } from '../scripts/dom';
+
+  const bar = $('.work-filter');
+  const section = bar?.closest('section');
+  if (bar && section) {
+    const chips = $$<HTMLButtonElement>('[data-filter]', bar);
+    const items = $$('[data-tags]', section);
+    const status = $('#filter-status');
+    const matches = (item: HTMLElement, filter: string) =>
+      filter === 'all' || (item.dataset.tags ?? '').split(/\s+/).includes(filter);
+
+    for (const chip of chips) {
+      const filter = chip.dataset.filter ?? 'all';
+      const count = $('.chip-count', chip);
+      if (count) count.textContent = String(items.filter((item) => matches(item, filter)).length);
+
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        let shown = 0;
+        for (const item of items) {
+          const visible = matches(item, filter);
+          item.hidden = !visible;
+          if (visible) {
+            shown++;
+            item.classList.add('is-visible');
+          }
+        }
+        if (status) status.textContent = `${shown} ${bar.dataset.noun ?? 'elem'} látható`;
+      });
+    }
+
+    const preselected = bar.dataset.param && new URLSearchParams(window.location.search).get(bar.dataset.param);
+    chips.find((chip) => preselected && chip.dataset.filter === preselected)?.click();
+  }
+</script>

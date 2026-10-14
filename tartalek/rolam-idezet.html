@@ -1,0 +1,55 @@
+<!-- Tartalék: a korábbi „Rólam” blokk (nagy idézet, forgó gyűrűs portré). Visszatehető az index.html-be az ABOUT helyére; a CSS-e (.about-ring, .about-quote, .quote-text, .sig, .fanni) a style.css-ből törölve lett, a JS (szavak kiemelése) megmaradt. -->
+    <!-- ============ ABOUT ============ -->
+    <section class="section section-light about" id="rolam" aria-labelledby="rolam-title">
+      <div class="about-glow" aria-hidden="true"></div>
+      <div class="container about-grid">
+        <div class="about-visual reveal" aria-hidden="true">
+          <svg class="about-ring" viewBox="0 0 400 400">
+            <defs><path id="ring-path" d="M200 200m-178 0a178 178 0 1 1 356 0a178 178 0 1 1 -356 0"/></defs>
+            <circle class="ring-dash" cx="200" cy="200" r="196"/>
+            <text><textPath href="#ring-path">WORDPRESS · WOOCOMMERCE · PHP · EGYEDI FEJLESZTÉS · 10+ ÉV TAPASZTALAT · </textPath></text>
+          </svg>
+          <figure class="placeholder placeholder--round about-photo">
+            <svg viewBox="0 0 48 48"><circle cx="24" cy="17" r="8"/><path d="M8 42c2-9 8-13 16-13s14 4 16 13"/></svg>
+            <figcaption>Kép helye: Egyed Balázs portré<br><small>négyzetes, kör alakra vágva</small></figcaption>
+          </figure>
+        </div>
+
+        <div class="about-copy">
+          <p class="eyebrow eyebrow-light reveal">rólam</p>
+          <h2 id="rolam-title" class="sr-only">Rólam – Egyed Balázs</h2>
+
+          <figure class="about-quote reveal">
+            <svg class="quote-mark" viewBox="0 0 120 90" aria-hidden="true">
+              <path d="M14 84c-6-20 0-46 26-64l8 9c-12 10-16 20-14 30 12 0 20 8 20 18 0 10-9 17-19 17-9 0-17-4-21-10z"/>
+              <path d="M66 84c-6-20 0-46 26-64l8 9c-12 10-16 20-14 30 12 0 20 8 20 18 0 10-9 17-19 17-9 0-17-4-21-10z"/>
+            </svg>
+            <blockquote>
+              <p class="quote-text">Nálam nem egy ügyfélszolgálattal beszélsz, hanem <em>azzal, aki az oldaladat építi.</em> Ezért ismerek minden projektet személyesen – és ezért nem tűnök el az átadás után sem.</p>
+            </blockquote>
+            <figcaption>
+              <span class="sig">
+                <strong>Egyed Balázs</strong>
+                <svg viewBox="0 0 220 24" aria-hidden="true"><path d="M4 16c40-10 90-14 140-8 24 3 46 2 72-6"/></svg>
+              </span>
+              <span>webfejlesztő, programozó</span>
+            </figcaption>
+          </figure>
+
+          <p class="about-text reveal">Programozó vagyok, aki dizájnban is gondolkodik. Több mint 10 éve fejlesztek egyedi weboldalakat és webshopokat, kívül-belül ismerem a WordPress és a WooCommerce rendszert. A célom nem csak egy szép oldal, hanem olyan megoldás, ami valódi üzleti értéket teremt.</p>
+
+          <div class="fanni reveal">
+            <div class="placeholder placeholder--avatar" aria-hidden="true"><span>Fanni</span></div>
+            <p><strong>Ágoston Fanni</strong> – projektmenedzser, a feleségem és a jobbkezem. Ő kezeli a megkereséseket, hogy én a fejlesztésre koncentrálhassak.</p>
+          </div>
+
+          <dl class="stats reveal">
+            <div><dt>átadott weboldal</dt><dd class="mono" data-count="150" data-suffix="+">150+</dd></div>
+            <div><dt>elégedett ügyfél</dt><dd class="mono" data-count="90" data-suffix="+">90+</dd></div>
+            <div><dt>év tapasztalat</dt><dd class="mono" data-count="10" data-suffix="+">10+</dd></div>
+            <div><dt>sikertelen projekt – őszintén</dt><dd class="mono" data-count="1">1</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+

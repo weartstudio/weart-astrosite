@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  /** Large two-column layout with lead text. */
+  feature?: boolean;
+  /** Home page variant: short client name, no tags, no filter data. */
+  compact?: boolean;
+}
+
+const { project, feature = false, compact = false } = Astro.props;
+const { name, shortName, title, lead, url, filters, labels, shotLabel, phoneLabel } = project.data;
+
+const eyebrow = feature ? `${name} · kiemelt projekt` : compact ? (shortName ?? name) : name;
+const shot = (n: number) => (shotLabel ? `Kép helye: ${shotLabel}, ${n}. képernyőkép` : `Kép helye: ${n}. képernyőkép`);
+const phone = phoneLabel ?? shotLabel;
+---
+
+<a
+  class:list={['work reveal', { 'work--feature': feature }]}
+  href={url ?? '#'}
+  data-tags={compact ? undefined : filters.join(' ')}
+>
+  <div class="work-frame">
+    <div class="work-stack">
+      <div class="shot shot--back placeholder">
+        <span>{shot(2)}</span>
+      </div>
+      <div class="shot shot--front placeholder">
+        <span>{shot(1)}</span>
+      </div>
+      <div class="shot shot--phone placeholder">
+        <span>
+          {phone && (
+            <>
+              {phone}
+              <br />
+            </>
+          )}
+          mobilkép
+        </span>
+      </div>
+    </div>
+  </div>
+  {feature ? (
+    <div class="work-body">
+      <p class="eyebrow eyebrow-light">{eyebrow}</p>
+      <h3>{title}</h3>
+      {lead && <p class="work-lead">{lead}</p>}
+      {!compact && (
+        <ul class="work-tags">
+          {labels.map((label) => (
+            <li>{label}</li>
+          ))}
+        </ul>
+      )}
+      <span class="link-arrow">
+        Esettanulmány <ArrowIcon />
+      </span>
+    </div>
+  ) : (
+    <>
+      <p class="eyebrow eyebrow-light">{eyebrow}</p>
+      <h3>{title}</h3>
+      {!compact && (
+        <ul class="work-tags">
+          {labels.map((label) => (
+            <li>{label}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  )}
+</a>
+
+<script>
+  import { $, $$, prefersReducedMotion } from '../../scripts/dom';
+
+  // the screenshot stack tilts slightly toward the pointer, as one unit
+  for (const card of $$('.work')) {
+    const frame = $('.work-frame', card);
+    const stack = $('.work-stack', card);
+    if (!frame || !stack) continue;
+    card.addEventListener('pointermove', (e) => {
+      if (prefersReducedMotion() || e.pointerType !== 'mouse') return;
+      const r = frame.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      stack.style.setProperty('--ry', `${(px * 6).toFixed(2)}deg`);
+      stack.style.setProperty('--rx', `${(-py * 4).toFixed(2)}deg`);
+    });
+    card.addEventListener('pointerleave', () => {
+      stack.style.removeProperty('--rx');
+      stack.style.removeProperty('--ry');
+    });
+  }
+</script>

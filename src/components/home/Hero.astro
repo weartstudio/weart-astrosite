@@ -1,0 +1,123 @@
+---
+import HeroSpaceScene from '../art/HeroSpaceScene.astro';
+import HeroVisual from '../art/HeroVisual.astro';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+
+const proofInitials = ['LL', 'HI', 'KÉ', 'SzCs'];
+---
+
+<section class="hero section-dark" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true">
+    <span></span>
+    <span></span>
+  </div>
+  <HeroSpaceScene />
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow eyebrow-dark reveal">Egyedi weboldal fejlesztés</p>
+      <h1 id="hero-title" class="reveal">
+        Nálunk azzal beszélsz, aki <span class="hl">az oldaladat építi</span>.
+      </h1>
+      <p class="lead reveal">
+        Egyed Balázs és Ágoston Fanni vagyunk. Több mint 10 éve készítünk egyedi WordPress oldalakat és webshopokat, és
+        úgy adjuk át őket, hogy utána te is könnyen kezelhesd. Nincs közvetítő, a kérdésre az válaszol, aki dolgozik
+        rajta.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-primary" href="#kapcsolat">
+          Beszélgessünk
+        </a>
+        <a class="link-arrow" href="#munkaink">
+          Munkáink <ArrowIcon />
+        </a>
+      </div>
+      <div class="hero-proof reveal">
+        <div class="avatars" aria-hidden="true">
+          {proofInitials.map((initials) => (
+            <span>{initials}</span>
+          ))}
+        </div>
+        <p>
+          <strong class="mono">90+</strong> elégedett ügyfél · <strong class="mono">150+</strong> átadott weboldal
+        </p>
+      </div>
+    </div>
+    <HeroVisual />
+  </div>
+  <script>
+    import '../../scripts/starfield';
+    import { $, $$, prefersReducedMotion } from '../../scripts/dom';
+
+    const reduceMotion = prefersReducedMotion();
+
+    /* typed code in the hero card */
+    type Token = [className: string, text: string];
+    const codeTokens: Token[] = [
+      ['c', '// Egyedi funkció, plugin helyett\n'],
+      ['k', 'add_action'],
+      ['', '( '],
+      ['s', "'init'"],
+      ['', ', '],
+      ['k', 'function'],
+      ['', '() {\n  '],
+      ['k', 'register_post_type'],
+      ['', '( '],
+      ['s', "'referencia'"],
+      ['', ' );\n} );\n'],
+      ['c', '// Gyors, tiszta, karbantartható ✓'],
+    ];
+
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    function renderStatic(el: HTMLElement): void {
+      el.replaceChildren(
+        ...codeTokens.map(([className, text]) => {
+          if (!className) return document.createTextNode(text);
+          const span = document.createElement('span');
+          span.className = className;
+          span.textContent = text;
+          return span;
+        }),
+      );
+    }
+
+    async function typeLoop(el: HTMLElement): Promise<never> {
+      for (;;) {
+        el.replaceChildren();
+        for (const [className, text] of codeTokens) {
+          const node = className ? document.createElement('span') : document.createTextNode('');
+          if (node instanceof HTMLElement) node.className = className;
+          el.appendChild(node);
+          for (const ch of text) {
+            node.textContent += ch;
+            await sleep(ch === '\n' ? 180 : 28 + Math.random() * 40);
+          }
+        }
+        await sleep(4200);
+      }
+    }
+
+    const codeEl = $('#typed-code');
+    if (codeEl) {
+      if (reduceMotion) renderStatic(codeEl);
+      else setTimeout(() => void typeLoop(codeEl), 900);
+    }
+
+    /* parallax on the floating cards */
+    const hero = $('.hero');
+    const visual = $('.hero-visual');
+    if (hero && visual && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+      const cards = $$('[data-depth]', visual);
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        for (const card of cards) {
+          const depth = Number(card.dataset.depth);
+          card.style.transform = `translate(${(nx * depth).toFixed(1)}px, ${(ny * depth).toFixed(1)}px)`;
+        }
+      });
+      hero.addEventListener('pointerleave', () => cards.forEach((card) => (card.style.transform = '')));
+    }
+  </script>
+</section>

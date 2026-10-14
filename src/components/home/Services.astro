@@ -1,0 +1,76 @@
+---
+import ServicePartnerArt from '../art/ServicePartnerArt.astro';
+import ServiceWebArt from '../art/ServiceWebArt.astro';
+import ServiceWordPressArt from '../art/ServiceWordPressArt.astro';
+import TechLogos from '../art/TechLogos.astro';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+
+const services = [
+  {
+    Art: ServiceWebArt,
+    title: 'Weboldal, Webshop',
+    text: 'Egyedi weboldalakat és webshopokat építünk, amik gyorsan töltenek be, jól néznek ki és tényleg eladnak.',
+  },
+  {
+    Art: ServiceWordPressArt,
+    title: 'WordPress fejlesztés',
+    text: 'Ha kell egy egyedi funkció, bővítmény vagy testreszabás, azt kódból oldjuk meg, nem sablonok toldozgatásával.',
+  },
+  {
+    Art: ServicePartnerArt,
+    title: 'Állandó partnerség',
+    badge: 'ha igényled',
+    text: 'Az indulás után is számíthatsz ránk: figyeljük, frissítjük és fejlesztjük tovább az oldalad, ahogy a vállalkozásod nő.',
+  },
+];
+---
+
+<section class="section section-light section-tint services" id="szolgaltatasok" aria-labelledby="szolg-title">
+  <div class="container">
+    <header class="section-head reveal has-doodle">
+      <svg class="doodle doodle--moon" viewBox="0 0 80 80" aria-hidden="true">
+        <circle class="dl-paper" cx="40" cy="40" r="22"></circle>
+        <circle class="dl-crater" cx="33" cy="34" r="5"></circle>
+        <circle class="dl-crater" cx="47" cy="47" r="3.5"></circle>
+        <circle class="dl-crater" cx="48" cy="31" r="2.2"></circle>
+      </svg>
+      <p class="eyebrow eyebrow-light">szolgáltatásaink</p>
+      <h2 id="szolg-title">Miben tudunk segíteni?</h2>
+    </header>
+
+    <div class="service-grid">
+      {services.map(({ Art, title, badge, text }) => (
+        <article class:list={['service reveal', { 'service--partner': badge }]}>
+          <div class="service-visual">
+            <Art />
+          </div>
+          <h3>
+            {title}
+            {badge && <span class="badge mono">{badge}</span>}
+          </h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+
+    <svg class="service-flow" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M200 0v34h376v52"></path>
+      <path d="M600 0v86"></path>
+      <path d="M1000 0v34H624v52"></path>
+      <path class="tip" d="M568 80l8 14 8-14z"></path>
+      <path class="tip" d="M592 80l8 14 8-14z"></path>
+      <path class="tip" d="M616 80l8 14 8-14z"></path>
+    </svg>
+
+    <div class="services-cta reveal">
+      <p>A legtöbb weboldallal kapcsolatos feladatban tudunk segíteni. Mesélj a projektedről!</p>
+      <a class="btn btn-primary" href="#kapcsolat">
+        Beszélgessünk <ArrowIcon />
+      </a>
+    </div>
+
+    <ul class="tech reveal" aria-label="Technológiák, amikkel dolgozunk">
+      <TechLogos />
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,238 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import PostCard from '../../components/cards/PostCard.astro';
+import ArrowIcon from '../../components/icons/ArrowIcon.astro';
+import PageHero from '../../components/PageHero.astro';
+import PhotoPlaceholder from '../../components/PhotoPlaceholder.astro';
+import {
+  authorRole,
+  categoryHref,
+  formatDate,
+  POSTS_PATH,
+  primaryCategory,
+  relatedPosts,
+  type Post,
+} from '../../data/blog';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, allPosts: posts } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+  allPosts: Post[];
+}
+
+const { post, allPosts } = Astro.props;
+const { title, excerpt, date, modified, readingMinutes, categories, author, featuredImage } = post.data;
+const { Content, headings } = await render(post);
+const toc = headings.filter(({ depth }) => depth === 2);
+const published = formatDate(date);
+const category = primaryCategory(post);
+const role = author && authorRole(author.slug);
+const related = relatedPosts(post, allPosts);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  datePublished: date.toISOString(),
+  dateModified: modified.toISOString(),
+  ...(featuredImage && { image: featuredImage.src }),
+  ...(author && { author: { '@type': 'Person', name: author.name } }),
+  publisher: { '@type': 'Organization', name: 'Weart' },
+  inLanguage: 'hu',
+};
+---
+
+<BaseLayout
+  title={`${title} · Weart blog`}
+  description={excerpt}
+  nav="blog"
+  og={{ type: 'article', title }}
+  jsonLd={jsonLd}
+  readProgress
+>
+  <PageHero article>
+    <nav class="breadcrumb reveal" aria-label="Morzsamenü">
+      <a href={POSTS_PATH}>Blog</a>
+      {category && (
+        <>
+          <span aria-hidden="true">/</span>
+          <a href={categoryHref(category)}>{category.name}</a>
+        </>
+      )}
+    </nav>
+    <h1 id="page-title" class="reveal">
+      {title}
+    </h1>
+    {excerpt && <p class="lead reveal">{excerpt}</p>}
+    <div class="article-meta reveal">
+      <PhotoPlaceholder class="placeholder--round article-avatar" />
+      {author && (
+        <p class="article-author">
+          <strong>{author.name}</strong>
+          {role && <span>{role}</span>}
+        </p>
+      )}
+      <p class="article-facts mono">
+        <time datetime={published.iso}>{published.label}</time>
+        <span>{readingMinutes} perc olvasás</span>
+      </p>
+    </div>
+  </PageHero>
+
+  <section class="section section-light article-section">
+    <div class="container">
+      {featuredImage ? (
+        <figure class="article-cover">
+          <Image
+            src={featuredImage.src}
+            alt={featuredImage.alt}
+            width={featuredImage.width}
+            height={featuredImage.height}
+            widths={[768, 1240, 1860]}
+            sizes="(min-width: 1240px) 1240px, 100vw"
+            loading="eager"
+          />
+        </figure>
+      ) : (
+        <figure class="article-cover placeholder">
+          <span>Borítókép helye</span>
+        </figure>
+      )}
+
+      <div class="article-layout">
+        {toc.length > 1 && (
+          <aside class="toc" aria-labelledby="toc-title">
+            <p class="eyebrow eyebrow-light" id="toc-title">
+              tartalom
+            </p>
+            <ol>
+              {toc.map(({ slug, text }) => (
+                <li>
+                  <a href={`#${slug}`}>{text}</a>
+                </li>
+              ))}
+            </ol>
+          </aside>
+        )}
+
+        <article class="prose">
+          <Content />
+
+          <footer class="article-foot">
+            {categories.length > 0 && (
+              <ul class="post-tags" aria-label="Kategóriák">
+                {categories.map((item) => (
+                  <li>
+                    <a href={categoryHref(item)}>{item.name}</a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button class="chip copy-link" type="button">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M6.5 9.5l3-3M7 4.5l1.2-1.2a2.8 2.8 0 0 1 4 4L11 8.5M9 11.5l-1.2 1.2a2.8 2.8 0 0 1-4-4L5 7.5"></path>
+              </svg>
+              <span>Link másolása</span>
+            </button>
+          </footer>
+
+          {author && (
+            <div class="author-card">
+              <PhotoPlaceholder
+                class="placeholder--round author-avatar"
+                caption={`${author.name.split(' ').at(-1)}<br>képe`}
+              />
+              <div>
+                <p class="eyebrow eyebrow-light">a cikket írta</p>
+                <p class="author-name">{author.name}</p>
+                {author.description && <p>{author.description}</p>}
+              </div>
+            </div>
+          )}
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section section-light related" aria-labelledby="related-title">
+      <div class="container">
+        <header class="related-head">
+          <div>
+            <p class="eyebrow eyebrow-light">olvasd tovább</p>
+            <h2 id="related-title">Kapcsolódó cikkek</h2>
+          </div>
+          <a class="link-arrow" href={POSTS_PATH}>
+            Összes cikk <ArrowIcon />
+          </a>
+        </header>
+        <div class="post-grid">
+          {related.map((relatedPost) => (
+            <PostCard post={relatedPost} compact />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<script>
+  import { $, $$, rafThrottle } from '../../scripts/dom';
+
+  /* reading progress bar */
+  const prose = $('.prose');
+  const progress = $('.read-progress');
+  if (prose && progress) {
+    const update = () => {
+      const r = prose.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight * 0.6)));
+      progress.style.setProperty('--p', p.toFixed(3));
+    };
+    const onScroll = rafThrottle(update);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+
+  /* active table of contents entry */
+  const tocLinks = $$<HTMLAnchorElement>('.toc a[href^="#"]');
+  if (tocLinks.length && 'IntersectionObserver' in window) {
+    const tocIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          tocLinks.forEach((a) =>
+            a.classList.toggle('is-active', decodeURIComponent(a.hash) === `#${entry.target.id}`),
+          );
+        }
+      },
+      { rootMargin: '-20% 0px -70% 0px' },
+    );
+    tocLinks
+      .map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+      .filter((el): el is HTMLElement => el !== null)
+      .forEach((heading) => tocIo.observe(heading));
+  }
+
+  /* copy link */
+  const copyButton = $('.copy-link');
+  const copyLabel = copyButton && $('span', copyButton);
+  if (copyButton && copyLabel) {
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyLabel.textContent = 'Link kimásolva';
+      } catch {
+        copyLabel.textContent = 'Nem sikerült másolni';
+      }
+      setTimeout(() => (copyLabel.textContent = 'Link másolása'), 2400);
+    });
+  }
+</script>

@@ -1,0 +1,35 @@
+---
+/** Sticky contact button on phones; hidden while the hero or the contact section is in view. */
+---
+
+<a class="mobile-cta btn btn-primary" href="#kapcsolat">
+  Beszélgessünk
+</a>
+
+<script>
+  import { $ } from '../../scripts/dom';
+
+  const cta = $('.mobile-cta');
+  const hero = $('.hero');
+  const contact = $('#kapcsolat');
+
+  if (cta && hero && contact && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let contactVisible = false;
+    const update = () => cta.classList.toggle('is-shown', !heroVisible && !contactVisible);
+    new IntersectionObserver(
+      ([entry]) => {
+        heroVisible = entry?.isIntersecting ?? false;
+        update();
+      },
+      { threshold: 0.1 },
+    ).observe(hero);
+    new IntersectionObserver(
+      ([entry]) => {
+        contactVisible = entry?.isIntersecting ?? false;
+        update();
+      },
+      { threshold: 0.05 },
+    ).observe(contact);
+  }
+</script>
