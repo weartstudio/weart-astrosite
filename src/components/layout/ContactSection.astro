@@ -248,8 +248,12 @@ const domId = (fieldId: number) => `gf-${form.id}-${fieldId}`;
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), version_hash: form.dataset.versionHash }),
+          // with a "page" or "redirect" confirmation Gravity Forms answers a saved submission with a redirect to the
+          // CMS thank-you page, which has no CORS headers; not following it keeps the request from failing
+          redirect: 'manual',
         });
-        const result = (await response.json()) as SubmissionResult;
+        const result: SubmissionResult =
+          response.type === 'opaqueredirect' ? { is_valid: true } : ((await response.json()) as SubmissionResult);
 
         if (result.is_valid) {
           form.reset();
