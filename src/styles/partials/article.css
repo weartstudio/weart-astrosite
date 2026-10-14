@@ -105,6 +105,9 @@
     gap: 72px;
     align-items: start;
   }
+  .article-layout--no-toc {
+    grid-template-columns: minmax(0, 700px);
+  }
 }
 
 .toc {

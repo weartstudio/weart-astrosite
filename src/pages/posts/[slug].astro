@@ -106,7 +106,7 @@ const jsonLd = {
         </figure>
       )}
 
-      <div class="article-layout">
+      <div class:list={['article-layout', { 'article-layout--no-toc': toc.length <= 1 }]}>
         {toc.length > 1 && (
           <aside class="toc" aria-labelledby="toc-title">
             <p class="eyebrow eyebrow-light" id="toc-title">
