@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../../assets/logo-dark.png';
-import { getNavLinks, type NavKey } from '../../data/site';
+import { navCta, navLinks, type NavKey } from '../../data/site';
 
 interface Props {
   current: NavKey;
@@ -10,7 +10,6 @@ interface Props {
 }
 
 const { current, readProgress = false } = Astro.props;
-const navLinks = getNavLinks(current);
 const homeHref = current === 'home' ? '#top' : '/';
 ---
 
@@ -23,13 +22,13 @@ const homeHref = current === 'home' ? '#top' : '/';
       {navLinks.map(({ label, href, key }) => {
         const active = key !== null && key === current;
         return (
-          <a href={href} class:list={{ 'is-active': active }} aria-current={active ? 'page' : undefined}>
+          <a href={href} class:list={{ 'is-active': active }} aria-current={active ? 'true' : undefined}>
             {label}
           </a>
         );
       })}
-      <a class="btn btn-primary btn-sm nav-cta" href="#kapcsolat">
-        Kapcsolat
+      <a class="btn btn-primary btn-sm nav-cta" href={navCta.href}>
+        {navCta.label}
       </a>
     </nav>
     <button
@@ -78,15 +77,15 @@ const homeHref = current === 'home' ? '#top' : '/';
     });
 
     // home page: highlight the link of the section in view
-    const sectionLinks = $$<HTMLAnchorElement>('a[href^="#"]:not(.btn)', nav);
+    const sectionLinks = $$<HTMLAnchorElement>('a[href*="#"]:not(.btn)', nav).filter(
+      (a) => a.pathname === window.location.pathname,
+    );
     if (sectionLinks.length && 'IntersectionObserver' in window) {
       const navIo = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
-            sectionLinks.forEach((a) =>
-              a.classList.toggle('is-active', a.getAttribute('href') === `#${entry.target.id}`),
-            );
+            sectionLinks.forEach((a) => a.classList.toggle('is-active', a.hash === `#${entry.target.id}`));
           }
         },
         { rootMargin: '-45% 0px -50% 0px' },

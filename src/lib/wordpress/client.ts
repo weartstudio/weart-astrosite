@@ -19,11 +19,15 @@ export async function wpQuery<T>(query: string, variables: Record<string, unknow
     body: JSON.stringify({ query, variables }),
   });
 
+  const text = await response.text();
+  // short excerpt of the raw response, so a WAF/CDN block (e.g. Cloudflare) is identifiable from the build log
+  const excerpt = `\n  Response: ${text.slice(0, 500)}\n  Server: ${response.headers.get('server') ?? '?'}, cf-ray: ${response.headers.get('cf-ray') ?? '-'}`;
+
   let body: GraphQLResponse<T>;
   try {
-    body = (await response.json()) as GraphQLResponse<T>;
+    body = JSON.parse(text) as GraphQLResponse<T>;
   } catch {
-    throw new Error(`WordPress GraphQL: ${response.status} ${response.statusText}, the response is not JSON.`);
+    throw new Error(`WordPress GraphQL: ${response.status} ${response.statusText}, the response is not JSON.${excerpt}`);
   }
 
   if (body.errors?.length) {
@@ -34,7 +38,7 @@ export async function wpQuery<T>(query: string, variables: Record<string, unknow
     throw new Error(`WordPress GraphQL error:\n  ${messages}${hint}`);
   }
   if (!response.ok || !body.data) {
-    throw new Error(`WordPress GraphQL: ${response.status} ${response.statusText}`);
+    throw new Error(`WordPress GraphQL: ${response.status} ${response.statusText}${excerpt}`);
   }
   return body.data;
 }
