@@ -1,8 +1,12 @@
 ---
 import PhotoPlaceholder from '../PhotoPlaceholder.astro';
 import { site } from '../../data/site';
+import { getGravityForm } from '../../lib/wordpress/gravity-forms';
 
-const topics = ['Új weboldal', 'Webshop', 'Meglévő oldal fejlesztése', 'Karbantartás, támogatás', 'Még nem tudom'];
+// fields, labels and button come from Gravity Forms at build time; the browser posts straight to its REST API
+const form = await getGravityForm(site.contactFormId);
+const inputTypes = { text: 'text', email: 'email', phone: 'tel', website: 'url', number: 'number' } as const;
+const domId = (fieldId: number) => `gf-${form.id}-${fieldId}`;
 ---
 
 <section class="section section-dark contact" id="kapcsolat" aria-labelledby="kapcsolat-title">
@@ -59,41 +63,79 @@ const topics = ['Új weboldal', 'Webshop', 'Meglévő oldal fejlesztése', 'Karb
       </div>
     </div>
 
-    <form class="contact-form reveal" id="contact-form" novalidate>
-      <div class="field">
-        <label for="f-name">Név*</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" required />
+    <form
+      class="contact-form reveal"
+      id="contact-form"
+      action={form.submitUrl}
+      method="post"
+      novalidate
+      data-success={form.successMessage}
+      data-version-hash={form.honeypot?.versionHash}
+    >
+      <div class="form-grid">
+        {form.fields.map((field) => {
+          if (field.type === 'hidden') return <input type="hidden" name={field.name} value={field.defaultValue} />;
+          const id = domId(field.id);
+          const descId = field.description ? `${id}-desc` : undefined;
+          const common = {
+            id,
+            name: field.name,
+            required: field.required,
+            'aria-describedby': descId,
+          };
+          return (
+            <div
+              class:list={['field', { 'field--half': field.half }]}
+              data-logic={field.logic && JSON.stringify(field.logic)}
+              hidden={field.logic ? true : undefined}
+            >
+              <label for={id}>
+                {field.label}
+                {field.required && '*'}
+              </label>
+              {field.type === 'select' ? (
+                <select {...common}>
+                  {field.choices.map(({ text, value, selected }) => (
+                    <option value={value} selected={selected}>
+                      {text}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === 'textarea' ? (
+                <textarea
+                  {...common}
+                  rows="4"
+                  placeholder={field.placeholder || undefined}
+                  maxlength={field.maxLength}
+                  set:text={field.defaultValue}
+                />
+              ) : (
+                <input
+                  {...common}
+                  type={inputTypes[field.type]}
+                  value={field.defaultValue || undefined}
+                  placeholder={field.placeholder || undefined}
+                  maxlength={field.maxLength}
+                  autocomplete={field.autocomplete}
+                />
+              )}
+              {field.description && (
+                <span class="field-desc" id={descId}>
+                  {field.description}
+                </span>
+              )}
+            </div>
+          );
+        })}
       </div>
-      <div class="field-row">
-        <div class="field">
-          <label for="f-email">E-mail*</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required />
+      {form.honeypot && (
+        <div class="sr-only" aria-hidden="true">
+          <label for={`gf-${form.id}-hp`}>Ezt a mezőt hagyd üresen</label>
+          <input id={`gf-${form.id}-hp`} name={form.honeypot.name} type="text" tabindex="-1" autocomplete="off" />
         </div>
-        <div class="field">
-          <label for="f-phone">Telefonszám*</label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel" required />
-        </div>
-      </div>
-      <div class="field">
-        <label for="f-type">Miben segíthetünk?</label>
-        <select id="f-type" name="type">
-          {topics.map((topic) => (
-            <option>{topic}</option>
-          ))}
-        </select>
-      </div>
-      <div class="field">
-        <label for="f-msg">Üzenet*</label>
-        <textarea
-          id="f-msg"
-          name="message"
-          rows="4"
-          required
-          placeholder="Pár mondat a projektedről és arról, mit szeretnél elérni."
-        ></textarea>
-      </div>
+      )}
       <button class="btn btn-primary btn-block" type="submit">
-        Üzenet küldése
+        {form.submitLabel}
       </button>
       <p class="form-status" role="status" aria-live="polite"></p>
       <p class="form-hint">Az üzenetküldés nem kötelez semmire.</p>
@@ -101,62 +143,134 @@ const topics = ['Új weboldal', 'Webshop', 'Meglévő oldal fejlesztése', 'Karb
   </div>
   <script>
     import '../../scripts/starfield';
+    import { site } from '../../data/site';
     import { $, $$ } from '../../scripts/dom';
+    import type { FieldLogic } from '../../lib/wordpress/gravity-forms';
 
-    // No backend yet: a valid submission opens a prefilled e-mail in the visitor's mail client.
-    // Swap this for Gravity Forms or a real endpoint on the live site.
-    const RECIPIENT = 'info@weart.hu';
+    type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    interface SubmissionResult {
+      is_valid?: boolean;
+      validation_messages?: Record<string, string>;
+    }
+
     const messages = {
       valueMissing: 'Ezt a mezőt kérlek, töltsd ki.',
-      typeMismatch: 'Kérlek, valós e-mail címet adj meg.',
+      email: 'Kérlek, valós e-mail címet adj meg.',
+      url: 'Kérlek, valós webcímet adj meg.',
+      sending: 'Küldés…',
+      failed: `Nem sikerült elküldeni az üzenetet. Kérlek, próbáld újra, vagy írj nekünk: ${site.email}`,
     };
 
     const form = $<HTMLFormElement>('#contact-form');
     const status = form && $('.form-status', form);
+    const submit = form && $<HTMLButtonElement>('button[type="submit"]', form);
 
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      let firstInvalid: HTMLInputElement | HTMLTextAreaElement | null = null;
+    const controls = () => (form ? $$<Control>('.field input, .field select, .field textarea', form) : []);
+    const controlFor = (fieldId: string) => form?.querySelector<Control>(`.field [name="input_${fieldId}"]`) ?? null;
 
-      for (const input of $$<HTMLInputElement | HTMLTextAreaElement>('input, textarea', form)) {
-        const field = input.closest('.field');
-        if (!field) continue;
-        $('.error-msg', field)?.remove();
-        field.classList.remove('has-error');
-        input.removeAttribute('aria-invalid');
-        if (input.checkValidity()) continue;
-
-        const msg = document.createElement('span');
-        msg.className = 'error-msg';
-        msg.id = `${input.id}-err`;
-        msg.textContent = input.validity.typeMismatch ? messages.typeMismatch : messages.valueMissing;
-        field.appendChild(msg);
-        field.classList.add('has-error');
-        input.setAttribute('aria-invalid', 'true');
-        input.setAttribute('aria-describedby', msg.id);
-        firstInvalid ??= input;
+    function setError(control: Control, message: string | null) {
+      const field = control.closest('.field');
+      if (!field) return;
+      $('.error-msg', field)?.remove();
+      field.classList.toggle('has-error', message !== null);
+      const descId = $('.field-desc', field)?.id;
+      if (message === null) {
+        control.removeAttribute('aria-invalid');
+        if (descId) control.setAttribute('aria-describedby', descId);
+        else control.removeAttribute('aria-describedby');
+        return;
       }
+      const msg = document.createElement('span');
+      msg.className = 'error-msg';
+      msg.id = `${control.id}-err`;
+      msg.textContent = message;
+      field.appendChild(msg);
+      control.setAttribute('aria-invalid', 'true');
+      control.setAttribute('aria-describedby', descId ? `${descId} ${msg.id}` : msg.id);
+    }
 
+    // Gravity Forms conditional logic: hidden fields are disabled, so they are neither validated nor sent
+    const conditional = form ? $$<HTMLElement>('.field[data-logic]', form) : [];
+    function applyLogic() {
+      const matches = ({ fieldId, operator, value }: FieldLogic['rules'][number]) => {
+        const current = controlFor(fieldId)?.disabled ? '' : (controlFor(fieldId)?.value ?? '');
+        switch (operator) {
+          case 'is':
+            return current === value;
+          case 'isnot':
+            return current !== value;
+          case 'contains':
+            return current.includes(value);
+          case 'starts_with':
+            return current.startsWith(value);
+          case 'ends_with':
+            return current.endsWith(value);
+          default:
+            return false;
+        }
+      };
+      for (const field of conditional) {
+        const logic = JSON.parse(field.dataset.logic ?? '{}') as FieldLogic;
+        const met = logic.logicType === 'any' ? logic.rules.some(matches) : logic.rules.every(matches);
+        const show = logic.actionType === 'hide' ? !met : met;
+        field.hidden = !show;
+        $$<Control>('input, select, textarea', field).forEach((control) => (control.disabled = !show));
+      }
+    }
+    if (conditional.length) {
+      applyLogic();
+      form?.addEventListener('input', applyLogic);
+      form?.addEventListener('change', applyLogic);
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      let firstInvalid: Control | null = null;
+      for (const control of controls()) {
+        if (control.checkValidity()) {
+          setError(control, null);
+          continue;
+        }
+        const mismatch = control.validity.typeMismatch && (control.type === 'url' ? messages.url : messages.email);
+        setError(control, mismatch || messages.valueMissing);
+        firstInvalid ??= control;
+      }
       if (firstInvalid) {
         firstInvalid.focus();
         if (status) status.textContent = '';
         return;
       }
 
-      const data = new FormData(form);
-      const value = (key: string) => String(data.get(key) ?? '');
-      const subject = `Ajánlatkérés: ${value('type')}, ${value('name')}`;
-      const body = [
-        `Név: ${value('name')}`,
-        `E-mail: ${value('email')}`,
-        `Telefon: ${value('phone')}`,
-        `Téma: ${value('type')}`,
-        '',
-        value('message'),
-      ].join('\n');
-      window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      if (status)
-        status.textContent = 'Megnyitottuk a levelezőprogramodat az előre kitöltött üzenettel, csak küldd el!';
+      if (submit) submit.disabled = true;
+      if (status) status.textContent = messages.sending;
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), version_hash: form.dataset.versionHash }),
+        });
+        const result = (await response.json()) as SubmissionResult;
+
+        if (result.is_valid) {
+          form.reset();
+          applyLogic();
+          if (status) status.textContent = form.dataset.success ?? '';
+          return;
+        }
+        // server side validation: show Gravity Forms' messages next to the fields
+        const invalid = Object.entries(result.validation_messages ?? {}).flatMap(([fieldId, message]) => {
+          const control = controlFor(fieldId);
+          if (control) setError(control, message);
+          return control ? [control] : [];
+        });
+        if (!invalid.length) throw new Error(`Gravity Forms: ${response.status}`);
+        invalid[0]?.focus();
+        if (status) status.textContent = '';
+      } catch {
+        if (status) status.textContent = messages.failed;
+      } finally {
+        if (submit) submit.disabled = false;
+      }
     });
   </script>
 </section>

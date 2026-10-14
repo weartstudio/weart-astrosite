@@ -88,14 +88,23 @@
 .field {
   margin-bottom: 16px;
 }
-.field-row {
+.form-grid {
   display: grid;
   gap: 0 16px;
 }
 @media (min-width: 560px) {
-  .field-row {
+  .form-grid {
     grid-template-columns: 1fr 1fr;
   }
+  .form-grid .field {
+    grid-column: 1 / -1;
+  }
+  .form-grid .field--half {
+    grid-column: auto;
+  }
+}
+.field[hidden] {
+  display: none;
 }
 .field label {
   display: block;
@@ -129,6 +138,7 @@
   box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.2);
 }
 .field.has-error input,
+.field.has-error select,
 .field.has-error textarea {
   border-color: #f2978e;
 }
@@ -136,6 +146,12 @@
   display: block;
   color: #f2978e;
   font-size: 14px;
+  margin-top: 4px;
+}
+.field .field-desc {
+  display: block;
+  color: var(--footer-text);
+  font-size: 13px;
   margin-top: 4px;
 }
 .form-status {

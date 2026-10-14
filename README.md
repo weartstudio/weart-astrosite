@@ -14,6 +14,12 @@ A GraphQL végpont jelenleg csak bejelentkezett felhasználónak válaszol, ezé
 
 Új vagy módosított cikk csak új builddel jelenik meg. Ha automatikusan frissülnie kell, a WordPressből egy deploy hookot kell hívni mentéskor.
 
+A kapcsolati űrlap a Gravity Forms 2-es űrlapja (`site.contactFormId`). A mezőit, a gomb szövegét és a köszönő üzenetet a build kéri le a REST API-ból (`src/lib/wordpress/gravity-forms.ts`), a beküldést a böngésző közvetlenül a `content.weart.hu/wp-json/gf/v2/forms/2/submissions` végpontra küldi. Ezért:
+
+- Az űrlap módosítása a Gravity Formsban csak új builddel jelenik meg.
+- A Gravity Forms frissítése után is új build kell. A honeypot `version_hash` értéke a bővítmény verziójától függ, a build a `content.weart.hu/contact/` oldalról olvassa ki. Elavult értékkel a beküldések a spam közé kerülnek, értesítő nélkül.
+- Támogatott mezőtípusok: szöveg, e-mail, telefon, webcím, szám, szövegdoboz, legördülő, rejtett, feltételes megjelenítéssel. Más típusnál a build hibával leáll.
+
 ## Parancsok
 
 | Parancs           | Mit csinál                                                    |
@@ -58,6 +64,5 @@ src/
 
 ## Nyitott pontok
 
-- A kapcsolati űrlap még a látogató levelezőjét nyitja meg (`mailto:`). Élesben valódi végpontra kell cserélni (`src/components/layout/ContactSection.astro`).
 - A képek helyén még helyőrzők vannak. Ha megvannak a fotók, `src/assets/` alá kerüljenek, és az `astro:assets` `<Image>` komponensével jelenjenek meg.
 - A `projects.yaml` 5 és 7 közötti elemei vázlatok (cím és link ellenőrizendő), a 8 és 10 közöttiek üres helyek.

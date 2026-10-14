@@ -11,12 +11,15 @@ export const site = {
   },
   legalUrl: 'https://new.weart.hu/legal/',
   aboutUrl: 'https://new.weart.hu/about/',
+  /** Gravity Forms form behind the contact section. */
+  contactFormId: 2,
 } as const;
 
 export type NavKey = 'home' | 'work' | 'blog';
 
 /** Main navigation, the same on every page: section links always point to the matching part of the home page. */
 export const navLinks = [
+  { label: 'Kezdőlap', href: '/', key: 'home' },
   { label: 'Munkáink', href: '/#munkaink', key: 'work' },
   { label: 'Szolgáltatások', href: '/#szolgaltatasok', key: null },
   { label: 'Rólunk', href: '/#rolunk', key: null },

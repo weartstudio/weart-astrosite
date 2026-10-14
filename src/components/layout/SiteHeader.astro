@@ -10,12 +10,11 @@ interface Props {
 }
 
 const { current, readProgress = false } = Astro.props;
-const homeHref = current === 'home' ? '#top' : '/';
 ---
 
 <header class="site-header" id="top">
   <div class="container header-inner">
-    <a class="logo" href={homeHref} aria-label="Weart, kezdőlap">
+    <a class="logo" href="/" aria-label="Weart, kezdőlap">
       <Image src={logo} alt="Weart" widths={[116, 232]} sizes="116px" loading="eager" fetchpriority="high" />
     </a>
     <nav class="main-nav" id="main-nav" aria-label="Fő navigáció">
@@ -76,24 +75,24 @@ const homeHref = current === 'home' ? '#top' : '/';
       if (e.key === 'Escape') setMenu(false);
     });
 
-    // home page: highlight the link of the section in view
-    const sectionLinks = $$<HTMLAnchorElement>('a[href*="#"]:not(.btn)', nav).filter(
-      (a) => a.pathname === window.location.pathname,
-    );
-    if (sectionLinks.length && 'IntersectionObserver' in window) {
+    // home page: highlight the link of the section in view ("Kezdőlap" while the hero is)
+    const pageLinks = $$<HTMLAnchorElement>('a:not(.btn)', nav).filter((a) => a.pathname === window.location.pathname);
+    const linkFor = new Map<Element, HTMLAnchorElement>();
+    pageLinks.forEach((a) => {
+      const target = a.hash ? document.getElementById(a.hash.slice(1)) : $('.hero');
+      if (target) linkFor.set(target, a);
+    });
+    if (linkFor.size && 'IntersectionObserver' in window) {
       const navIo = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
-            sectionLinks.forEach((a) => a.classList.toggle('is-active', a.hash === `#${entry.target.id}`));
+            pageLinks.forEach((a) => a.classList.toggle('is-active', a === linkFor.get(entry.target)));
           }
         },
         { rootMargin: '-45% 0px -50% 0px' },
       );
-      sectionLinks
-        .map((a) => document.getElementById(a.hash.slice(1)))
-        .filter((el): el is HTMLElement => el !== null)
-        .forEach((section) => navIo.observe(section));
+      linkFor.forEach((_link, section) => navIo.observe(section));
     }
   }
 </script>

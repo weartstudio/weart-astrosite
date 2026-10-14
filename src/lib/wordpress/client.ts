@@ -27,7 +27,9 @@ export async function wpQuery<T>(query: string, variables: Record<string, unknow
   try {
     body = JSON.parse(text) as GraphQLResponse<T>;
   } catch {
-    throw new Error(`WordPress GraphQL: ${response.status} ${response.statusText}, the response is not JSON.${excerpt}`);
+    throw new Error(
+      `WordPress GraphQL: ${response.status} ${response.statusText}, the response is not JSON.${excerpt}`,
+    );
   }
 
   if (body.errors?.length) {
@@ -41,4 +43,23 @@ export async function wpQuery<T>(query: string, variables: Record<string, unknow
     throw new Error(`WordPress GraphQL: ${response.status} ${response.statusText}${excerpt}`);
   }
   return body.data;
+}
+
+/** Root URL of the WordPress site, without a trailing slash. */
+export const wpSiteUrl = WP_GRAPHQL_URL.replace(/\/graphql\/?$/, '');
+
+/** Absolute URL of a WordPress REST route, e.g. `wpRestUrl('gf/v2/forms/2')`. */
+export const wpRestUrl = (route: string): string => `${wpSiteUrl}/wp-json/${route.replace(/^\//, '')}`;
+
+/** GET request to the WordPress REST API (with the application password, if set); throws on non-2xx responses. */
+export async function wpRest<T>(route: string): Promise<T> {
+  const url = wpRestUrl(route);
+  const response = await fetch(url, { headers: { Accept: 'application/json', ...authHeader() } });
+  const text = await response.text();
+  if (!response.ok) {
+    throw new Error(
+      `WordPress REST ${url}: ${response.status} ${response.statusText}\n  Response: ${text.slice(0, 500)}`,
+    );
+  }
+  return JSON.parse(text) as T;
 }
