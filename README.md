@@ -1,6 +1,6 @@
 # Weart weboldal
 
-Astro 7 alapú statikus oldal. A blogcikkek build időben a headless WordPressből jönnek (content.weart.hu, WPGraphQL). A korábbi kézzel írt HTML változat a `mentesek/02-statikus-html/` mappában van.
+Astro 7 alapú statikus oldal. A blogcikkek build időben a headless WordPressből jönnek (content.weart.hu, REST API). A korábbi kézzel írt HTML változat a `mentesek/02-statikus-html/` mappában van.
 
 ## Beállítás
 
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-A GraphQL végpont jelenleg csak bejelentkezett felhasználónak válaszol, ezért a buildhez egy WordPress alkalmazásjelszó kell (Felhasználók > Profil > Alkalmazásjelszavak). A `.env` nem kerül verziókezelésbe. Éles buildnél (pl. Vercel) ugyanezeket a környezeti változókat kell beállítani.
+A cikkek a nyilvános REST API-ból (`/wp-json/wp/v2/posts`) jönnek, de a kapcsolati űrlap definícióját a Gravity Forms csak bejelentkezett felhasználónak adja ki, ezért a buildhez egy WordPress alkalmazásjelszó kell (Felhasználók > Profil > Alkalmazásjelszavak). A `.env` nem kerül verziókezelésbe. Éles buildnél (pl. Vercel) ugyanezeket a környezeti változókat kell beállítani.
 
 Új vagy módosított cikk csak új builddel jelenik meg. Ha automatikusan frissülnie kell, a WordPressből egy deploy hookot kell hívni mentéskor.
 
@@ -37,7 +37,7 @@ src/
   content.config.ts   projektek és blogcikkek sémája (Zod)
   content/
     projects.yaml     munkáink: új projekt = új elem ebben a fájlban
-  lib/wordpress/      GraphQL kliens, a cikkeket betöltő content loader, HTML átalakítók
+  lib/wordpress/      REST kliens, a cikkeket betöltő content loader, HTML átalakítók
   pages/posts/        cikklista (/posts/) és cikkoldal (/posts/<slug>/)
   data/               statikus adatok (elérhetőségek, GYIK, vélemények, számok, kategóriák)
   layouts/            BaseLayout: head, SEO, fejléc, kapcsolat szekció, lábléc

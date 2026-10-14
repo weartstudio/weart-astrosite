@@ -13,13 +13,14 @@ export default defineConfig({
   },
   env: {
     schema: {
-      WP_GRAPHQL_URL: envField.string({
+      // root URL of the headless WordPress; posts come from its REST API (/wp-json/wp/v2/posts)
+      WP_URL: envField.string({
         context: 'server',
         access: 'public',
         url: true,
-        default: 'https://content.weart.hu/graphql',
+        default: 'https://content.weart.hu',
       }),
-      // WordPress username + application password, needed while the GraphQL endpoint is restricted to logged-in users
+      // WordPress username + application password, needed to read the Gravity Forms form definition
       WP_USER: envField.string({ context: 'server', access: 'secret', optional: true }),
       WP_APP_PASSWORD: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
